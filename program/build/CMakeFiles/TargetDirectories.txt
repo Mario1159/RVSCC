@@ -1,3 +1,0 @@
-C:/Users/romer/Desktop/RISCV_5SP_CPU/program/build/CMakeFiles/riscv-program.dir
-C:/Users/romer/Desktop/RISCV_5SP_CPU/program/build/CMakeFiles/edit_cache.dir
-C:/Users/romer/Desktop/RISCV_5SP_CPU/program/build/CMakeFiles/rebuild_cache.dir
