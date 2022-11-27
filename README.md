@@ -1,1 +1,1 @@
-# 5-Stage RISC-V Processor pipelined CPU with hazard detection
+# 5-Stage RISC-V pipelined processor with hazard detection
