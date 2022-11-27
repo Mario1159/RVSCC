@@ -9,11 +9,11 @@ module CPU(
 
     always_comb begin
         case(pc_src)
-             'd0: pc_next = pc + 'd4;
-             'd1: pc_next = pc_target;
+            'd0: pc_next = pc + 'd4;
+            'd1: pc_next = pc_target;
         endcase
     end
-    
+
     always_ff @(posedge clk) begin
         if(reset)
             pc <= 'b0;
@@ -23,7 +23,7 @@ module CPU(
 
     logic[31:0] instr;
     InstructionMemory  #(.N(32)) instruction_memory(pc, instr);
-    
+
     logic reg_write;
     logic[31:0] read_data_1, read_data_2;
     RegisterFile #(.N_REG_ADDR(5), .N_DATA(32)) register_file(
@@ -35,8 +35,8 @@ module CPU(
         result,
         read_data_1,
         read_data_2
-     );
-        
+    );
+
     logic[1:0] imm_src;
     ControlUnit control_unit(
         instr[6:0],
@@ -51,13 +51,13 @@ module CPU(
         imm_src,
         reg_write
     );
-    
+
     Extend imm_extend(
         imm_src[1:0],
         instr[31:7],
         imm_ext[31:0]
     );
-    
+
     logic[31:0] src_a = read_data_1;
     logic[31:0] src_b;
     always_comb begin
@@ -78,7 +78,7 @@ module CPU(
         alu_result,
         alu_status
     );
-    
+
     logic[31:0] write_data = read_data_2;
     logic[31:0] data_mem_read_data;
     DataMemory data_memory(
@@ -88,12 +88,12 @@ module CPU(
         write_data,
         data_mem_read_data
     );
-    
+
     logic[31:0] result;
     always_comb begin
         case(result_src)
-             'd0: result = alu_result;
-             'd1: result = data_mem_read_data;
+            'd0: result = alu_result;
+            'd1: result = data_mem_read_data;
         endcase
     end
 endmodule
