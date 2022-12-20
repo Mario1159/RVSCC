@@ -2,10 +2,11 @@
 module Test_CPU();
     logic clk, reset;
     CPU cpu(clk, reset);
-    always #1 clk = ~clk;
+    always #10 clk = ~clk;
     initial begin
+        clk = 0;
         reset = 1;
-        #5
+        #25
         reset = 0;
     end
 endmodule

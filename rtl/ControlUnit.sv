@@ -14,8 +14,15 @@ module ControlUnit
     output logic[1:0] imm_src,
     output logic reg_write
 );
-    logic branch, jump;
-    assign pc_src = (branch & zero) | jump;
+    logic branch, branch_result, branch_neg, jump;
+    assign pc_src = (branch & branch_result) | jump;
+    
+    always_comb begin
+        case(branch_neg)
+            'd0: branch_result = !zero;
+            'd1: branch_result = zero;
+        endcase
+    end
     
     logic[1:0] alu_op;
     MainDecoder main_decoder(
@@ -24,7 +31,6 @@ module ControlUnit
         jump,
         result_src,
         mem_write,
-        alu_ctrl,
         alu_src,
         imm_src,
         reg_write,
@@ -34,8 +40,9 @@ module ControlUnit
     ALUDecoder alu_decoder(
         opcode[5],
         funct_3,
-        funct_7,
+        funct_7[5],
         alu_op,
-        alu_ctrl
+        alu_ctrl,
+        branch_neg
     );
 endmodule

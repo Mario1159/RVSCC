@@ -5,7 +5,8 @@ module CPU(
 );
     logic[31:0] pc, pc_next;
     logic[31:0] imm_ext;
-    logic[31:0] pc_target = imm_ext + 'd4;
+    logic[31:0] pc_target;
+    assign pc_target = imm_ext + pc;
 
     always_comb begin
         case(pc_src)
@@ -26,8 +27,10 @@ module CPU(
 
     logic reg_write;
     logic[31:0] read_data_1, read_data_2;
+    logic[31:0] result;
     RegisterFile #(.N_REG_ADDR(5), .N_DATA(32)) register_file(
         clk,
+        reset,
         instr[19:15],
         instr[24:20],
         instr[11:7],
@@ -37,7 +40,10 @@ module CPU(
         read_data_2
     );
 
+    logic[1:0] result_src;
     logic[1:0] imm_src;
+    logic[2:0] alu_ctrl;
+    logic alu_status_zero;
     ControlUnit control_unit(
         instr[6:0],
         instr[14:12],
@@ -58,7 +64,7 @@ module CPU(
         imm_ext[31:0]
     );
 
-    logic[31:0] src_a = read_data_1;
+    //logic[31:0] src_a = read_data_1;
     logic[31:0] src_b;
     always_comb begin
         case(alu_src)
@@ -68,32 +74,35 @@ module CPU(
     end
 
     logic[31:0] alu_result;
-    logic[1:0] alu_ctrl;
     logic[3:0] alu_status;
-    logic alu_status_zero = alu_status[1];
+    assign alu_status_zero = alu_status[2];
     ALU alu(
-        src_a,
+        read_data_1,
         src_b,
         alu_ctrl,
         alu_result,
         alu_status
     );
 
-    logic[31:0] write_data = read_data_2;
+    logic[31:0] write_data;
+    assign write_data = read_data_2;
     logic[31:0] data_mem_read_data;
     DataMemory data_memory(
         clk,
+        reset,
         alu_result,
         mem_write,
         write_data,
         data_mem_read_data
     );
 
-    logic[31:0] result;
+    
     always_comb begin
         case(result_src)
-            'd0: result = alu_result;
-            'd1: result = data_mem_read_data;
+            'b00: result = alu_result;
+            'b01: result = data_mem_read_data;
+            'b10: result = pc + 'd4;
+            'b11: result = 'dx;
         endcase
     end
 endmodule
