@@ -9,13 +9,13 @@ module ALU #(parameter N = 32)
 	output logic[3:0] status
 );
 	logic n, z, c, v;
-
+    logic opsign_comp, v_value;
 	always_comb begin
 	   // Check if the signs of the operands are equal considering substraction sign simplification over the B operand
-       logic opsign_comp = (a[N-1] == (b[N-1] ^ opcode[0]));
+       opsign_comp = (a[N-1] == (b[N-1] ^ opcode[0]));
        // There is an overflow if the signs are equal and the result differ from the operation sign
        // The overflow flag only gets assign when the operation is either a sum or a substraction
-       logic v_value = opsign_comp && (result != a[N-1]);
+       v_value = opsign_comp && (result != a[N-1]);
 	   case(opcode)
 			'b000: begin // Addition
 				{c, result} = a + b;

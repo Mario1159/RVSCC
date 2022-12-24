@@ -1,5 +1,7 @@
 `timescale 1ns / 1ps
 
+import rv32i_defs::*;
+
 module MainDecoder(
     input logic[6:0] opcode,
     output logic branch,
@@ -11,9 +13,12 @@ module MainDecoder(
     output logic reg_write,
     output logic[1:0] alu_op
 );
+
+    opcode_fmt opcode_enum;
+    assign opcode_enum = opcode_fmt'(opcode);
     always_comb begin
         case(opcode)
-            'b0000011: begin // lw
+            LOAD: begin // lw
                 reg_write = 1;
                 imm_src = 'b00;
                 alu_src = 1;
@@ -23,17 +28,17 @@ module MainDecoder(
                 alu_op = 'b00;
                 jump = 0;
             end
-            'b0100011: begin // sw
+            STORE: begin // sw
                 reg_write = 0;
                 imm_src = 'b01;
                 alu_src = 1;
                 mem_write = 1;
-                result_src = 'bxx;
+                result_src = 'bx0; // xx?
                 branch = 0;
                 alu_op = 'b00;
                 jump = 0;
             end
-            'b0110011: begin // r-type
+            REG_OPERATION: begin // r-type
                 reg_write = 1;
                 imm_src = 'bxx;
                 alu_src = 0;
@@ -43,7 +48,7 @@ module MainDecoder(
                 alu_op = 'b10;
                 jump = 0;
             end
-            'b1100011: begin // b-type
+            BRANCH: begin // b-type
                 reg_write = 0;
                 imm_src = 'b10;
                 alu_src = 0;
@@ -53,7 +58,7 @@ module MainDecoder(
                 alu_op = 'b01;
                 jump = 0;
             end
-            'b0010011: begin // i-type
+            IMM_OPERATION: begin // i-type
                 reg_write = 1;
                 imm_src = 'b00;
                 alu_src = 1;
@@ -63,7 +68,7 @@ module MainDecoder(
                 alu_op = 'b10;
                 jump = 0;
             end
-            'b1101111: begin // jal
+            JAL: begin // jal
                 reg_write = 1;
                 imm_src = 'b11;
                 alu_src = 'bx;
@@ -74,14 +79,14 @@ module MainDecoder(
                 jump = 1;
             end
             default: begin
-                reg_write = 'bx;
+                reg_write = 'b0;
                 imm_src = 'bxx;
                 alu_src = 'bx;
-                mem_write = 'bx;
-                result_src = 'bx;
-                branch = 'bx;
+                mem_write = 'b0;
+                result_src = 'b00;
+                branch = 'b0;
                 alu_op = 'bx;
-                jump = 'bx;
+                jump = 'b0;
             end
         endcase
     end

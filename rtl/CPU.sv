@@ -95,7 +95,6 @@ module CPU(
         write_data,
         data_mem_read_data
     );
-
     
     always_comb begin
         case(result_src)

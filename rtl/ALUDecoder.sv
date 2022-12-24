@@ -10,7 +10,10 @@ module ALUDecoder(
 );
     always_comb begin
         casex({alu_op, funct_3, opcode_5, funct_7_5})
-            'b00xxxxx: alu_ctrl = 'b000; // lw sw
+            'b00xxxxx: begin
+                alu_ctrl = 'b000; // lw sw
+                branch_neg = 'dx;
+            end
             'b01000xx: begin
                 alu_ctrl = 'b001; // beq
                 branch_neg = 1;
@@ -23,14 +26,38 @@ module ALUDecoder(
                 alu_ctrl = 'b101; // bge
                 branch_neg = 1;
             end
-            'b1000000: alu_ctrl = 'b000; // add
-            'b1000001: alu_ctrl = 'b000; // add
-            'b1000010: alu_ctrl = 'b000; // add
-            'b1000011: alu_ctrl = 'b001; // sub
-            'b10010xx: alu_ctrl = 'b101; // slt
-            'b10110xx: alu_ctrl = 'b000; // or
-            'b10111xx: alu_ctrl = 'b000; // and
-            default: alu_ctrl = 'bxxx;
+            'b1000000: begin
+                alu_ctrl = 'b000; // add
+                branch_neg = 'dx;
+            end
+            'b1000001: begin
+                alu_ctrl = 'b000; // add
+                branch_neg = 'dx;
+            end
+            'b1000010: begin
+                alu_ctrl = 'b000; // add
+                branch_neg = 'dx;
+            end
+            'b1000011: begin
+                alu_ctrl = 'b001; // sub
+                branch_neg = 'dx;
+            end
+            'b10010xx: begin
+                alu_ctrl = 'b101; // slt
+                branch_neg = 'dx;
+            end
+            'b10110xx: begin
+                alu_ctrl = 'b000; // or
+                branch_neg = 'dx;
+            end
+            'b10111xx: begin
+                alu_ctrl = 'b000; // and
+                branch_neg = 'dx;
+            end
+            default: begin 
+                alu_ctrl = 'dx;
+                branch_neg = 'dx;
+            end
         endcase
     end
 endmodule
