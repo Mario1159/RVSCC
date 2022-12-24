@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 
 module Test_RegisterFile();
-    logic clk;
+    logic clk, rst;
     logic[31:0] addr_1, addr_2, addr_3;
     logic write_enable_3;
     logic[31:0] write_data_3;
@@ -10,6 +10,7 @@ module Test_RegisterFile();
     
     RegisterFile register_file(
         clk,
+        rst,
         addr_1,
         addr_2,
         addr_3,
@@ -22,11 +23,18 @@ module Test_RegisterFile();
     always #1 clk = ~clk;
     
     initial begin
-        write_enable_3 = 1;
-        addr_3 = 'd10;
-        write_data_3 = 'd21;
-        #5
+        clk = 0;
+        rst = 1;
+        addr_1 = 0;
+        addr_2 = 'd5;
+        addr_3 = 0;
         write_enable_3 = 0;
-        addr_1 = 'd10;
+        write_data_3 = 0;
+        #5
+        rst = 0;
+        #5
+        addr_3 = 'd5;
+        write_data_3 = 'd14;
+        write_enable_3 = 1;
     end
 endmodule

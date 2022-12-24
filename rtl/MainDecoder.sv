@@ -3,16 +3,14 @@
 module MainDecoder(
     input logic[6:0] opcode,
     output logic branch,
-
     output logic jump,
     output logic[1:0] result_src,
     output logic mem_write,
-    output logic[2:0] alu_ctrl,
     output logic alu_src,
     output logic[1:0] imm_src,
     output logic reg_write,
     output logic[1:0] alu_op
- );   
+);
     always_comb begin
         case(opcode)
             'b0000011: begin // lw
@@ -45,7 +43,7 @@ module MainDecoder(
                 alu_op = 'b10;
                 jump = 0;
             end
-            'b1100011: begin // beq
+            'b1100011: begin // b-type
                 reg_write = 0;
                 imm_src = 'b10;
                 alu_src = 0;
