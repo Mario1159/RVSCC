@@ -16,7 +16,7 @@ target_compile_options(${PROJECT_NAME} PRIVATE
 target_link_options(${PROJECT_NAME} PRIVATE
     -nostartfiles
     -static
-    -Wl,-T${PROJECT_SOURCE_DIR}/linker-script.ld
+    -Wl,-T${CMAKE_SOURCE_DIR}/linker-script.ld
     -Wl,-z,stack-size=64
 )
 
