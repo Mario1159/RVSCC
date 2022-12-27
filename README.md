@@ -1,6 +1,6 @@
 # Collection of SystemVerilog simple RV32I CPU cores
 
-## Table of contesnts
+## Table of contents
 - [Core list](#core-list)
 - [Directory structure](#directory-structure)
 - [Requirements](#requirements)
