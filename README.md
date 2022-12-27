@@ -1,9 +1,19 @@
 # Collection of SystemVerilog basic RV32I CPU cores
+
+## Table of contesnts
+- [Core List](#core-list)
+- [Directory structure](#directory-structure)
+- [Requirements](#requirements)
+- [Build](#build)
+- [Tests](#tests)
+- [Benchmark](#benchmark)
+
+## Core list
 - Single cycle processor
-- 5-Stage  pipelined processor with hazard detection
+- 5-Stage pipelined processor with hazard detection
 
 
-## Directory Structure
+## Directory structure
     .
     ├── fw                   # Firmware
     │   ├── sandbox          # C/Assembly sandbox firmware source
@@ -24,7 +34,7 @@ To build the firmware that will be loaded in the instruction memory execute CMak
 cmake -DCMAKE_TOOLCHAIN_FILE=./cmake/toolchain.cmake -Bbuild
 make -Cbuild
 ```
-## Testing
+## Tests
 (TODO)
 ## Benchmark
 (TODO)
