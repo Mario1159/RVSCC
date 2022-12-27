@@ -1,7 +1,7 @@
-# Collection of SystemVerilog basic RV32I CPU cores
+# Collection of SystemVerilog simple RV32I CPU cores
 
 ## Table of contesnts
-- [Core List](#core-list)
+- [Core list](#core-list)
 - [Directory structure](#directory-structure)
 - [Requirements](#requirements)
 - [Build](#build)
@@ -11,7 +11,6 @@
 ## Core list
 - Single cycle processor
 - 5-Stage pipelined processor with hazard detection
-
 
 ## Directory structure
     .
