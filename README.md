@@ -11,6 +11,7 @@
 ## Core list
 - Single cycle processor
 - 5-Stage pipelined processor with hazard detection
+- 5-Stage pipelined processor with N-way associative cache
 
 ## Directory structure
     .
@@ -33,6 +34,7 @@ To build the firmware that will be loaded in the instruction memory execute CMak
 cmake -DCMAKE_TOOLCHAIN_FILE=./cmake/toolchain.cmake -Bbuild
 make -Cbuild
 ```
+This will generate a `sandbox.mem` file in the `/build` folder. To load the file in the simulation make sure to add it to your simulator sources and that the memory path matches the path specifies in the memory module.
 ## Tests
 (TODO)
 ## Benchmark
