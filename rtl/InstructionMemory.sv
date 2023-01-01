@@ -19,5 +19,5 @@ module InstructionMemory #(
                  mem[addr + 'd3]};
     end
 
-    initial $readmemh("rv32fw.mem", mem);
+    initial $readmemh("sandbox.mem", mem);
 endmodule

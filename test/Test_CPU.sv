@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 module Test_CPU();
     logic clk, reset;
-    PipelinedCPU cpu(clk, reset);
+    CPU cpu(clk, reset);
     always #10 clk = ~clk;
     initial begin
         clk = 0;
