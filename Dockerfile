@@ -7,9 +7,10 @@ RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/reposit
   && apk update \
   && apk add wget git make cmake gcc-riscv-none-elf newlib-riscv-none-elf verilator vim
 
-# Copy RISC-V repository into container
-COPY . /root
-
-# Initialize the enviroment
+# Clone the repository
 WORKDIR /root
-CMD ["/bin/sh"]
+RUN git clone https://git.1159.cl/Mario1159/RVSCC.git
+
+# Initialize the enviroment keeping container alive
+ENTRYPOINT ["tail"]
+CMD ["-f","/dev/null"]
