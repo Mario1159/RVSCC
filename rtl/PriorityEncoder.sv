@@ -9,9 +9,9 @@ module PriorityEncoder #(
     output logic valid
 );
   always_comb begin
-    data_out = 'dx;
+    data_out = 3'dx;
     for (int i = 0; i < 2 ** N; i++) begin
-      if (data_in[i]) data_out = i;
+      if (data_in[i]) data_out = i[N-1:0];
     end
     if (data_in == 0) valid = 0;
     else valid = 1;
