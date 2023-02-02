@@ -5,7 +5,7 @@ MAINTAINER Mario Romero <mario@1159.cl>
 # Install packages
 RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories \
   && apk update \
-  && apk add wget git make cmake gcc-riscv-none-elf newlib-riscv-none-elf verilator vim
+  && apk add build-base wget git make cmake gcc-riscv-none-elf newlib-riscv-none-elf verilator vim
 
 # Clone the repository
 WORKDIR /root
