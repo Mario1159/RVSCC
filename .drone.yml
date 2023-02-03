@@ -13,7 +13,7 @@ steps:
   - name: dockersock
     path: /var/run/docker.sock
   commands:
-  - docker build -t git.1159.cl/mario1159/rvscc
+  - docker build -t git.1159.cl/mario1159/rvscc .
   - docker push git.1159.cl/mario1159/rvscc:latest
 
 volumes:
