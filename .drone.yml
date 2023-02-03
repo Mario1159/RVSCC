@@ -1,0 +1,17 @@
+kind: pipeline
+name: default
+
+steps:
+- name: docker-build
+  image: docker:dind
+  volumes:
+  - name: dockersock
+    path: /var/run/docker.sock
+  commands:
+  - docker build -t git.1159.cl/mario1159/rvscc
+  - docker push git.1159.cl/mario1159/rvscc:latest
+
+volumes:
+- name: dockersock
+  host:
+    path: /var/run/docker.sock
