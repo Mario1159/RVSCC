@@ -2,6 +2,10 @@ kind: pipeline
 type: docker
 name: docker-build
 
+platform:
+  os: linux
+  arch: arm64
+
 steps:
 - name: build_and_push
   image: docker:dind
