@@ -1,8 +1,9 @@
 kind: pipeline
-name: default
+type: docker
+name: docker-build
 
 steps:
-- name: docker-build
+- name: build_and_push
   image: docker:dind
   volumes:
   - name: dockersock
