@@ -2,8 +2,6 @@ cmake_minimum_required(VERSION 3.10)
 
 project(rvscc-tests CXX)
 
-include(CTest)
-
 find_package(verilator HINTS $ENV{VERILATOR_ROOT})
 if (NOT verilator_FOUND)
   message(FATAL_ERROR "Verilator was not found. Either install it, or set the VERILATOR_ROOT environment variable")

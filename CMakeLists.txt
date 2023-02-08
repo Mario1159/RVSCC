@@ -1,5 +1,8 @@
 cmake_minimum_required(VERSION 3.10)
 project(rvscc)
+
+set_property(GLOBAL PROPERTY CTEST_TARGETS_ADDED 1)
+include(CTest)
 include(ExternalProject)
 
 ExternalProject_Add(firmware
