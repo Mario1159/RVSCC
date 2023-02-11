@@ -8,7 +8,7 @@ include(ExternalProject)
 ExternalProject_Add(firmware
   SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/fw
   BINARY_DIR ${CMAKE_CURRENT_SOURCE_DIR}/build/fw
-  CMAKE_ARGS -DCMAKE_TOOLCHAIN_FILE=${CMAKE_CURRENT_SOURCE_DIR}/fw/cmake/riscv-toolchain.cmake
+  CMAKE_ARGS -DCMAKE_TOOLCHAIN_FILE=${CMAKE_CURRENT_SOURCE_DIR}/cmake/riscv-toolchain.cmake
   INSTALL_COMMAND ""
 )
 

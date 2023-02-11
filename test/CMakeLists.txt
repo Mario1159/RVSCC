@@ -12,7 +12,7 @@ find_package(Threads REQUIRED)
 
 find_package(SystemCLanguage QUIET)
 
-function(custom_add_test)
+function(rvscc_add_test)
   cmake_parse_arguments(TEST
     ""
     "NAME"
@@ -37,12 +37,17 @@ function(custom_add_test)
   add_test(NAME ${TEST_TARGET_NAME} COMMAND ${TEST_TARGET_NAME})
 endfunction()
 
-custom_add_test(NAME alu
+rvscc_add_test(NAME alu
   SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/Test_ALU.sv
           ${CMAKE_CURRENT_SOURCE_DIR}/../rtl/ALU.sv
 )
 
-custom_add_test(NAME priority-encoder
+rvscc_add_test(NAME priority-encoder
   SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/Test_PriorityEncoder.sv
           ${CMAKE_CURRENT_SOURCE_DIR}/../rtl/PriorityEncoder.sv
+)
+
+rvscc_add_test(NAME data-memory
+	SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/Test_DataMemory.sv
+			${CMAKE_CURRENT_SOURCE_DIR}/../rtl/DataMemory.sv
 )

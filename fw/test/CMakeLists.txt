@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 
 project(test ASM)
-include(${CMAKE_CURRENT_SOURCE_DIR}/../cmake/utils.cmake)
+include(${CMAKE_CURRENT_SOURCE_DIR}/../../cmake/utils.cmake)
 
 option(DISSASEMBLY "Enable dissasembly" OFF)
 
