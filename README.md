@@ -45,11 +45,13 @@ docker run -it git.1159.cl/mario1159/rvscc
 ## Build
 To build the firmware that will be loaded in the instruction memory execute CMake in the `fw` directory specifying the RISC-V toolchain and build the recipe based in your selected generator (`make` in the following example).
 ```
-cmake -DCMAKE_TOOLCHAIN_FILE=./cmake/toolchain.cmake -Bbuild
-make -Cbuild
+cmake -Bbuild
+cmake --build build
 ```
 This will generate a `sandbox.mem` file in the `/build` folder. To load the file in the simulation make sure to add it to your simulator sources and that the memory path matches the path specifies in the memory module.
 ## Tests
-(TODO)
+```
+ctest --test-dir build
+```
 ## Benchmark
 (TODO)
