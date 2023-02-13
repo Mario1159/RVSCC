@@ -10,7 +10,7 @@ module Test_DataMemory ();
   localparam int MemorySize = 16;
   DataMemory #(
       .SIZE(MemorySize)
-  ) data_memory (
+  ) DUT (
       .clk(clk),
       .rst(rst),
       .addr(addr),
@@ -26,6 +26,8 @@ module Test_DataMemory ();
   logic [MemoryWriteRange:0][31:0] write_values;
   int start_addr;
   initial begin
+    $dumpfile("dump.vcd");
+    $dumpvars();
     // Reset
     clk = 0;
     rst = 1;
@@ -35,7 +37,7 @@ module Test_DataMemory ();
     #1;
     // Write to a range of values in memory
     write_enable = 1;
-    start_addr = $urandom_range(15);
+    start_addr   = $urandom_range(15);
     for (int i = 0; i < MemoryWriteRange; i++) begin
       addr = start_addr + i;
       write_values[i] = $urandom();

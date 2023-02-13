@@ -20,14 +20,12 @@ function(rvscc_add_test)
     ${ARGN}
   )
   set(TEST_TARGET_NAME test-${TEST_NAME})
-  add_executable(${TEST_TARGET_NAME} sim_individual_test.cpp)
+  add_executable(${TEST_TARGET_NAME} sim_main.cpp)
   verilate(${TEST_TARGET_NAME}
     SOURCES ${TEST_SOURCES}
-    SYSTEMC
+	TRACE
     VERILATOR_ARGS --timing
   )
-  set_property(TARGET ${TEST_TARGET_NAME} PROPERTY CXX_STANDARD ${SystemC_CXX_STANDARD})
-  verilator_link_systemc(${TEST_TARGET_NAME})
   list(GET TEST_SOURCES 0 TEST_TOP_MODULE)
   get_filename_component(TEST_TOP_MODULE_NAME ${TEST_TOP_MODULE} NAME_WE)
   target_compile_definitions(${TEST_TARGET_NAME} PRIVATE
