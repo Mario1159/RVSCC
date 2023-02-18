@@ -8,6 +8,7 @@ option(DISSASEMBLY "Enable dissasembly" OFF)
 list(APPEND TEST_SUBDIRS
     itype
     rtype
+	imm
 )
 
 foreach(TEST_SUBDIR IN LISTS TEST_SUBDIRS)

@@ -24,7 +24,7 @@ function(rvscc_add_test)
   verilate(${TEST_TARGET_NAME}
     SOURCES ${TEST_SOURCES}
 	TRACE
-    VERILATOR_ARGS --timing
+    VERILATOR_ARGS --timing --assert
   )
   list(GET TEST_SOURCES 0 TEST_TOP_MODULE)
   get_filename_component(TEST_TOP_MODULE_NAME ${TEST_TOP_MODULE} NAME_WE)
@@ -48,4 +48,9 @@ rvscc_add_test(NAME priority-encoder
 rvscc_add_test(NAME data-memory
 	SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/Test_DataMemory.sv
 			${CMAKE_CURRENT_SOURCE_DIR}/../rtl/DataMemory.sv
+)
+
+rvscc_add_test(NAME imm-extend
+	SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/Test_ImmExtend.sv
+			${CMAKE_CURRENT_SOURCE_DIR}/../rtl/ImmExtend.sv
 )

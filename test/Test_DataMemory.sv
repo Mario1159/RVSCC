@@ -46,10 +46,12 @@ module Test_DataMemory ();
     end
     // Read and compare the same range of values
     write_enable = 0;
+    #4;
     for (int i = 0; i < 16; i++) begin
       addr = start_addr + i;
       assert (read_data == write_values[i])
       else $error("Read failed at address %h", addr);
+      #2;
     end
     $finish;
   end
