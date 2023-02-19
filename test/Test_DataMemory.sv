@@ -26,8 +26,6 @@ module Test_DataMemory ();
   logic [MemoryWriteRange:0][31:0] write_values;
   int start_addr;
   initial begin
-    $dumpfile("dump.vcd");
-    $dumpvars();
     // Reset
     clk = 0;
     rst = 1;
@@ -39,7 +37,7 @@ module Test_DataMemory ();
     write_enable = 1;
     start_addr   = $urandom_range(15);
     for (int i = 0; i < MemoryWriteRange; i++) begin
-      addr = start_addr + i;
+      addr = start_addr + i*4;
       write_values[i] = $urandom();
       write_data = write_values[i];
       #2;
@@ -47,11 +45,12 @@ module Test_DataMemory ();
     // Read and compare the same range of values
     write_enable = 0;
     #4;
-    for (int i = 0; i < 16; i++) begin
-      addr = start_addr + i;
+    for (int i = 0; i < MemoryWriteRange; i++) begin
+      addr = start_addr + i*4;
+      #1;
       assert (read_data == write_values[i])
       else $error("Read failed at address %h", addr);
-      #2;
+      #1;
     end
     $finish;
   end

@@ -13,13 +13,32 @@ module Test_ALU ();
       .status(status)
   );
 
+  localparam RandomSumIterations = 32;
+
   initial begin
-    a = 'd3;
-    b = 'd11;
+    $dumpfile("dump.vcd");
+    $dumpvars;
+
+    a = 'd0;
+    b = 'd0;
     opcode = 'd0;
-    assert(result != 'd14) $display("3 + 11 != 14");
-    assert(status != 'b0000) $display("status(3 + 11) != 0000");
-    $display("Test successful");
+    #1
+    assert(result == 'd0) else $error("Incorrent result in operation: %d + %d", a, b);
+    assert(status == 'b0100) else $error("Incorrent flags in operation: %d + %d", a, b);
+
+    a = 'hFFFF_FFFF;
+    b = 'd0;
+    #1
+    assert(result == 'hFFFF_FFFF) else $error("Incorrent result in operation: %d + %d", a, b);
+    assert(status == 'b1000) else $error("Incorrent flags in operation: %d + %d", a, b);
+
+    for(int i = 0; i < RandomSumIterations; i++) begin
+      a = $random;
+      b = $random;
+      opcode = 'd0;
+      #1
+      assert(result == a + b) else $error("Failed in operation: %d + %d", a, b);
+    end
     $finish;
   end
 endmodule

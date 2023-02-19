@@ -31,8 +31,7 @@ module Test_ImmExtend ();
     $readmemh("../fw/test/test-imm.mem", mem);
     instr_info = '{
         // instr_info_t'{2'h3, 32'hFFFF_FFE2},
-        instr_info_t
-'{2'h3, 32'h0000_07E6},
+        instr_info_t'{2'h3, 32'h0000_07E6},
         instr_info_t'{2'h2, 32'h0000_0008},
         instr_info_t'{2'h1, 32'h0000_07FA},
         instr_info_t'{2'h0, 32'hFFFF_FFFF},

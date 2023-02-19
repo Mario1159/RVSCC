@@ -12,16 +12,13 @@ module Test_PriorityEncoder();
     initial begin
         data_in = 'b00000001;
         for (int i = 0; i < 8; i++) begin
-            assert (data_out == i[2:0] + 1 || valid == 1) else $error("[One-hot] Failed at %d", i);
-            #1
+            #1 assert (data_out == i[2:0] && valid == 1) else $error("Failed one-hot to index check at iteration %0d, %d", i, data_out);
             data_in = data_in << 'd1;
         end
-        #1
         data_in = 'b00101111;
-        assert (data_out == 'd5) else $error("[Manual entry] Failed at " + 5);
-        #1
+        #1 assert (data_out == 'd5) else $error("Incorrect result with input %b", data_in);
         data_in = 'b10101010;
-        assert (data_out == 'd7) else $error("[Manual entry] Failed at " + 7);
+        #1 assert (data_out == 'd7) else $error("Incorrect result with input %b", data_in);
         $finish;
     end
 endmodule
