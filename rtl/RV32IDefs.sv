@@ -1,4 +1,13 @@
 package rv32i_defs;
+
+    typedef enum logic[2:0]{
+        SUM = 'b000,
+        SUB = 'b001,
+        OR = 'b011,
+        AND = 'b010,
+        SLT = 'b101
+    } alu_opcode;
+
     typedef enum logic[6:0]{
         STALL = 'b0000000,
         REG_OPERATION = 'b0110011,

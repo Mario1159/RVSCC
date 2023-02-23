@@ -34,6 +34,7 @@ function(rvscc_add_test)
   cmake_parse_arguments(TEST
     ""
     "NAME"
+    "TOP"
     "SOURCES"
     ${ARGN}
   )
@@ -43,12 +44,14 @@ function(rvscc_add_test)
   if ("${CMAKE_BUILD_TYPE}" EQUAL "Release")
     verilate(${TEST_TARGET_NAME}
       SOURCES ${TEST_SOURCES}
+      TOP_MODULE ${TEST_TOP}
       SYSTEMC
       VERILATOR_ARGS --timing
     )
   else() # Debug
     verilate(${TEST_TARGET_NAME}
       SOURCES ${TEST_SOURCES}
+      TOP_MODULE ${TEST_TOP}
       TRACE
       SYSTEMC
       VERILATOR_ARGS --timing

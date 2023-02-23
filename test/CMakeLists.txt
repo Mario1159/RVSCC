@@ -35,9 +35,12 @@ function(rvscc_add_test)
   add_test(NAME ${TEST_TARGET_NAME} COMMAND ${TEST_TARGET_NAME})
 endfunction()
 
-rvscc_add_test(NAME alu
-  SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/Test_ALU.sv
-          ${CMAKE_CURRENT_SOURCE_DIR}/../rtl/ALU.sv
+rvscc_add_test(
+  NAME alu
+  TOP Test_ALU
+  SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/../rtl/RV32IDefs.sv
+          ${CMAKE_CURRENT_SOURCE_DIR}/Test_ALU.sv
+          ${CMAKE_CURRENT_SOURCE_DIR}/../rtl/ALU.sv  
 )
 
 rvscc_add_test(NAME priority-encoder
@@ -47,10 +50,17 @@ rvscc_add_test(NAME priority-encoder
 
 rvscc_add_test(NAME data-memory
 	SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/Test_DataMemory.sv
-			${CMAKE_CURRENT_SOURCE_DIR}/../rtl/DataMemory.sv
+			    ${CMAKE_CURRENT_SOURCE_DIR}/../rtl/DataMemory.sv
 )
 
 rvscc_add_test(NAME imm-extend
 	SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/Test_ImmExtend.sv
-			${CMAKE_CURRENT_SOURCE_DIR}/../rtl/ImmExtend.sv
+			    ${CMAKE_CURRENT_SOURCE_DIR}/../rtl/ImmExtend.sv
+)
+
+rvscc_add_test(
+  NAME register-file
+  TOP Test_RegisterFile
+  SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/Test_RegisterFile.sv
+          ${CMAKE_CURRENT_SOURCE_DIR}/../rtl/RegisterFile.sv
 )
