@@ -1,11 +1,11 @@
 `timescale 1ns / 1ps
 
-module Test_ImmExtend ();
+module test_imm_extend();
   logic [ 1:0] imm_src;
   logic [31:0] instr;
   logic [31:0] imm_ext;
 
-  ImmExtend DUT (
+  imm_extend DUT (
       .imm_src(imm_src),
       .instr  (instr[31:7]),
       .imm_ext(imm_ext)

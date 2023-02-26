@@ -2,7 +2,7 @@
 
 import rv32i_defs::*;
 
-module ControlUnit (
+module control_unit (
     input logic [6:0] opcode,
     input logic [2:0] funct_3,
     input logic [6:0] funct_7,
@@ -14,10 +14,10 @@ module ControlUnit (
     output logic reg_write,
     output logic jump,
     output logic branch,
-    branch_alu_neg
+    output logic branch_alu_neg
 );
   logic [1:0] alu_op;
-  MainDecoder main_decoder (
+  main_decoder main_decoder (
       .opcode(opcode),
       .branch(branch),
       .jump(jump),
@@ -29,7 +29,7 @@ module ControlUnit (
       .alu_op(alu_op)
   );
 
-  ALUDecoder alu_decoder (
+  alu_decoder alu_decoder (
       .opcode_5(opcode[5]),
       .funct_3(funct_3),
       .funct_7_5(funct_7[5]),

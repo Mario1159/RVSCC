@@ -1,10 +1,10 @@
 `timescale 1ns / 1ps
 
-module JumpControl (
+module jump_control (
     input  logic jump,
-    branch,
-    branch_alu_neg,
-    zero,
+    input  logic branch,
+    input  logic branch_alu_neg,
+    input  logic zero,
     output logic pc_src
 );
   logic alu_result, branch_result;
@@ -14,7 +14,7 @@ module JumpControl (
     case (branch_alu_neg)
       'd0: branch_result = alu_result;
       'd1: branch_result = !alu_result;
-      default: branch_result = 'dx;
+      default: branch_result = 1'dx;
     endcase
   end
 

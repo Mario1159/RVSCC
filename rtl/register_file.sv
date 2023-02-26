@@ -1,23 +1,18 @@
-`timescale 1ns / 1ps
+import rv32i_defs::*;
 
-// N = Bit width
-module RegisterFile #(
-    parameter int N_REG_ADDR = 5,
-    parameter int N_REG = 32,
-    parameter int N_DATA = 32
-) (
+module register_file (
     input logic clk,
-    rst,
-    input logic [N_REG_ADDR-1:0] addr_1,
-    addr_2,
-    addr_3,
+    input logic rst,
+    input logic [RegisterSize-1:0] addr_1,
+    input logic [RegisterSize-1:0] addr_2,
+    input logic [RegisterSize-1:0] addr_3,
     input logic write_enable_3,
-    input logic [N_DATA-1:0] write_data_3,
-    output logic [N_DATA-1:0] read_data_1,
-    read_data_2
+    input logic [OperandSize-1:0] write_data_3,
+    output logic [OperandSize-1:0] read_data_1,
+    output logic [OperandSize-1:0] read_data_2
 );
-  logic [N_DATA-1:0] mem  [N_REG-1:1];
-  logic [N_DATA-1:0] zero;
+  logic [OperandSize-1:0] mem  [NumRegisters-1:1];
+  logic [OperandSize-1:0] zero;
 
   always_comb begin
     zero = 'd0;

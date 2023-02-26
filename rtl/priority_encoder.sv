@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 
 // 2**N to N Priority encoder
-module PriorityEncoder #(
+module priority_encoder #(
     parameter int N = 4
 ) (
     input logic [2**N - 1:0] data_in,

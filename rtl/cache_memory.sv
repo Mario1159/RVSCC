@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module CacheMemory #(
+module cache_memory #(
     parameter int ADDR_SIZE  = 32,
     parameter int NUM_SETS   = 16,
     parameter int NUM_WAYS   = 4,
