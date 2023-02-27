@@ -11,7 +11,7 @@ module test_instr_memory ();
   logic [AddrSize-1:0] addr;
   logic [InstructionSize-1:0] instr;
 
-  instr_memory_if #(.NUM_INSTR(NumInstr)) dut_if;
+  instr_memory_if #(.NUM_INSTR(NumInstr)) dut_if();
 
   instr_memory #(
       .FILE_PATH(Path),

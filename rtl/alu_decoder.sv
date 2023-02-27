@@ -49,11 +49,11 @@ module alu_decoder(
         branch_neg = 1'dx;
       end
       'b10110??: begin
-        alu_ctrl   = 3'b000;  // or
+        alu_ctrl   = 3'b011;  // or
         branch_neg = 1'dx;
       end
       'b10111??: begin
-        alu_ctrl   = 3'b000;  // and
+        alu_ctrl   = 3'b010;  // and
         branch_neg = 1'dx;
       end
       default: begin

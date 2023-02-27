@@ -94,7 +94,7 @@ module single_cycle_datapath (
   alu alu (
       .a(read_data_1),
       .b(src_b),
-      .operation(alu_ctrl),
+      .operation(alu_opcode_t'(alu_ctrl)),
       .result(alu_result),
       .status(alu_status)
   );
