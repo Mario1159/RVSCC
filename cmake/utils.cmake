@@ -39,7 +39,6 @@ function(rvscc_add_test)
   )
   set(TEST_TARGET_NAME test-${TEST_NAME})
   add_executable(${TEST_TARGET_NAME} sim_main.cpp)
-  message(${TEST_TOP})
   verilate(${TEST_TARGET_NAME}
     SOURCES ${TEST_SOURCES}
 	PREFIX verilator_${TEST_TOP}

@@ -11,12 +11,13 @@ module test_instr_memory ();
   logic [AddrSize-1:0] addr;
   logic [InstructionSize-1:0] instr;
 
+  instr_memory_if #(.NUM_INSTR(NumInstr)) dut_if;
+
   instr_memory #(
-      .N_INSTR  (NumInstr),
-      .FILE_PATH(Path)
-  ) instruction_memory (
-      .addr (addr),
-      .instr(instr)
+      .FILE_PATH(Path),
+      .NUM_INSTR(NumInstr)
+  ) dut (
+      .instr_mem_if(dut_if.mem)
   );
 
   const
@@ -46,23 +47,22 @@ module test_instr_memory ();
   };
 
   initial begin
-    addr = 'd0;
+    dut_if.addr = 'd0;
     #1
-    assert (!$isunknown(instr))
+    assert (!$isunknown(dut_if.instr))
     else $error("Instruction memory not loaded");
     #1;
     foreach (assert_instr_mem[i]) begin
-      $display(i);
-      addr = AddrSize'(i * 4);
       #1
-      assert (instr == assert_instr_mem[i])
+      assert (dut_if.instr == assert_instr_mem[i])
       else
         $error(
             "Instruction %h at address %h does not match the expected intruction %h",
-            instr,
-            addr,
+            dut_if.instr,
+            dut_if.addr,
             assert_instr_mem[i]
         );
+      dut_if.next_instr();
     end
     $finish;
   end

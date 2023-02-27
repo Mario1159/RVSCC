@@ -53,6 +53,7 @@ rvscc_add_test(
   NAME instruction_memory
   TOP test_instr_memory
   SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/../rtl/rv32i_defs.sv
+          ${CMAKE_CURRENT_SOURCE_DIR}/../rtl/instr_memory_if.sv
           ${CMAKE_CURRENT_SOURCE_DIR}/../rtl/instr_memory.sv
   		  ${CMAKE_CURRENT_SOURCE_DIR}/test_instr_memory.sv
 )
@@ -64,6 +65,7 @@ rvscc_add_test(
           ${CMAKE_CURRENT_SOURCE_DIR}/../rtl/single_cycle_datapath.sv
           ${CMAKE_CURRENT_SOURCE_DIR}/../rtl/data_memory_if.sv
           ${CMAKE_CURRENT_SOURCE_DIR}/../rtl/data_memory.sv
+          ${CMAKE_CURRENT_SOURCE_DIR}/../rtl/instr_memory_if.sv
           ${CMAKE_CURRENT_SOURCE_DIR}/../rtl/instr_memory.sv
           ${CMAKE_CURRENT_SOURCE_DIR}/../rtl/jump_control.sv
           ${CMAKE_CURRENT_SOURCE_DIR}/../rtl/control_unit.sv

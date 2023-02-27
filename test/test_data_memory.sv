@@ -23,7 +23,7 @@ module test_data_memory ();
       .BLOCK_SIZE(MemoryBlockSize),
       .NUM_BLOCKS(NumMemoryBlocks)
   ) dut (
-      .mem_if(mem_if)
+      .data_mem_if(mem_if)
   );
 
   always #1 clk = ~clk;
