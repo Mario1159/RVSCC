@@ -1,4 +1,4 @@
-`timescale 1ns / 1ps
+`include "timescale.sv"
 
 module imm_extend (
     input  logic [ 1:0] imm_src,

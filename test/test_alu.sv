@@ -1,3 +1,5 @@
+`timescale 1ns / 1ps
+
 import rv32i_defs::*;
 
 module test_alu ();

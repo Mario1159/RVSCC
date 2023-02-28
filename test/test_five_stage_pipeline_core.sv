@@ -1,6 +1,6 @@
 `include "timescale.sv"
 
-module test_single_cycle_core ();
+module test_five_stage_pipeline_core ();
   logic clk, rst;
   always #1 clk = ~clk;
 
@@ -17,7 +17,7 @@ module test_single_cycle_core ();
   );
   data_memory #(.NUM_BLOCKS(128)) data_mem (.data_mem_if(data_mem_if.ram));
 
-  single_cycle_datapath dut (
+  five_stage_pipeline_datapath dut (
       .clk(clk),
       .rst(rst),
       .instr_mem_if(instr_mem_if.datapath),

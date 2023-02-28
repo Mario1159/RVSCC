@@ -1,3 +1,5 @@
+`include "timescale.sv"
+
 import rv32i_defs::*;
 
 module register_file (

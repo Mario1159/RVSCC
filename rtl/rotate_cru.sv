@@ -1,6 +1,6 @@
-`timescale 1ns / 1ps
+`include "timescale.sv"
 
-module RotateCRP #(
+module rotate_cru#(
     parameter ADDR_SIZE = 32,
     parameter NUM_SETS = 16,
     parameter NUM_WAYS = 4,

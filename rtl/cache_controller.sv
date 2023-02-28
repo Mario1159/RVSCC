@@ -1,6 +1,6 @@
-`timescale 1ns / 1ps
+`include "timescale.sv"
 
-module CacheController #(
+module cache_controller #(
     parameter int ADDR_SIZE  = 32,
     parameter int NUM_SETS   = 16,
     parameter int NUM_WAYS   = 4,

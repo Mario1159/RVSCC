@@ -1,3 +1,5 @@
+`include "timescale.sv"
+
 import rv32i_defs::*;
 
 interface instr_memory_if #(

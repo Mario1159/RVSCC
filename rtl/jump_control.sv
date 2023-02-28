@@ -1,4 +1,4 @@
-`timescale 1ns / 1ps
+`include "timescale.sv"
 
 module jump_control (
     input  logic jump,

@@ -1,4 +1,4 @@
-`timescale 1ns / 1ps
+`include "timescale.sv"
 
 package rv32i_defs;
   // Sizes in bits
@@ -27,5 +27,4 @@ package rv32i_defs;
     LUI = 'b0110111,
     AUIPC = 'b0010111
   } opcode_fmt_t;
-
 endpackage

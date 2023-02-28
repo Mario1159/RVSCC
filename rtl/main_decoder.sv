@@ -1,4 +1,4 @@
-`timescale 1ns / 1ps
+`include "timescale.sv"
 
 import rv32i_defs::*;
 
@@ -13,7 +13,6 @@ module main_decoder (
     output logic reg_write,
     output logic [1:0] alu_op
 );
-
   opcode_fmt_t opcode_enum;
   assign opcode_enum = opcode_fmt_t'(opcode);
   always_comb begin

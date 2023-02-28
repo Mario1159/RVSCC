@@ -1,3 +1,5 @@
+`include "timescale.sv"
+
 import rv32i_defs::*;
 
 module single_cycle_datapath (

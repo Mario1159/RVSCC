@@ -1,6 +1,6 @@
-`timescale 1ns / 1ps
+`include "timescale.sv"
 
-module TwoWayLRUCache #(
+module two_way_lru_cache #(
     parameter ADDR_SIZE = 32,
     parameter NUM_SETS = 16,
     parameter BLOCK_SIZE = 32

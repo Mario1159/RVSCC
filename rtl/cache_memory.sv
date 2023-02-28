@@ -1,4 +1,4 @@
-`timescale 1ns / 1ps
+`include "timescale.sv"
 
 module cache_memory #(
     parameter int ADDR_SIZE  = 32,

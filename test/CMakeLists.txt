@@ -1,4 +1,4 @@
-include(${CMAKE_CURRENT_SOURCE_DIR}/../cmake/utils.cmake)
+include(${PROJECT_SOURCE_DIR}/cmake/utils.cmake)
 
 find_package(verilator HINTS $ENV{VERILATOR_ROOT})
 if (NOT verilator_FOUND)
@@ -13,66 +13,86 @@ find_package(SystemCLanguage QUIET)
 rvscc_add_test(
   NAME alu
   TOP test_alu
-  SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/../rtl/rv32i_defs.sv
-          ${CMAKE_CURRENT_SOURCE_DIR}/../rtl/alu.sv  
-          ${CMAKE_CURRENT_SOURCE_DIR}/test_alu.sv
+  SOURCES ${PROJECT_SOURCE_DIR}/rtl/rv32i_defs.sv
+		  ${PROJECT_SOURCE_DIR}/rtl/alu.sv  
+		  ${PROJECT_SOURCE_DIR}/test/test_alu.sv
 )
 
 rvscc_add_test(
   NAME priority-encoder
   TOP test_priority_encoder
-  SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/../rtl/priority_encoder.sv
-          ${CMAKE_CURRENT_SOURCE_DIR}/test_priority_encoder.sv
+  SOURCES ${PROJECT_SOURCE_DIR}/rtl/priority_encoder.sv
+          ${PROJECT_SOURCE_DIR}/test/test_priority_encoder.sv
 )
 
 rvscc_add_test(
   NAME data-memory
   TOP test_data_memory
-  SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/../rtl/rv32i_defs.sv 
-          ${CMAKE_CURRENT_SOURCE_DIR}/../rtl/data_memory_if.sv
-          ${CMAKE_CURRENT_SOURCE_DIR}/../rtl/data_memory.sv
-   	      ${CMAKE_CURRENT_SOURCE_DIR}/test_data_memory.sv
+  SOURCES ${PROJECT_SOURCE_DIR}/rtl/rv32i_defs.sv 
+          ${PROJECT_SOURCE_DIR}/rtl/data_memory_if.sv
+          ${PROJECT_SOURCE_DIR}/rtl/data_memory.sv
+   	      ${PROJECT_SOURCE_DIR}/test/test_data_memory.sv
 )
 
 rvscc_add_test(
 	NAME imm-extend
 	TOP test_imm_extend
-	SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/../rtl/imm_extend.sv
-			${CMAKE_CURRENT_SOURCE_DIR}/test_imm_extend.sv
+	SOURCES ${PROJECT_SOURCE_DIR}/rtl/imm_extend.sv
+			${PROJECT_SOURCE_DIR}/test/test_imm_extend.sv
 )
 
 rvscc_add_test(
   NAME register-file
   TOP test_register_file
-  SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/../rtl/rv32i_defs.sv
-          ${CMAKE_CURRENT_SOURCE_DIR}/../rtl/register_file.sv
-  		  ${CMAKE_CURRENT_SOURCE_DIR}/test_register_file.sv
+  SOURCES ${PROJECT_SOURCE_DIR}/rtl/rv32i_defs.sv
+          ${PROJECT_SOURCE_DIR}/rtl/register_file.sv
+  		  ${PROJECT_SOURCE_DIR}/test/test_register_file.sv
 )
 
 rvscc_add_test(
   NAME instruction_memory
   TOP test_instr_memory
-  SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/../rtl/rv32i_defs.sv
-          ${CMAKE_CURRENT_SOURCE_DIR}/../rtl/instr_memory_if.sv
-          ${CMAKE_CURRENT_SOURCE_DIR}/../rtl/instr_memory.sv
-  		  ${CMAKE_CURRENT_SOURCE_DIR}/test_instr_memory.sv
+  SOURCES ${PROJECT_SOURCE_DIR}/rtl/rv32i_defs.sv
+          ${PROJECT_SOURCE_DIR}/rtl/instr_memory_if.sv
+          ${PROJECT_SOURCE_DIR}/rtl/instr_memory.sv
+  		  ${PROJECT_SOURCE_DIR}/test/test_instr_memory.sv
 )
 
 rvscc_add_test(
   NAME single-cycle-core
   TOP test_single_cycle_core
-  SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/../rtl/rv32i_defs.sv
-          ${CMAKE_CURRENT_SOURCE_DIR}/../rtl/single_cycle_datapath.sv
-          ${CMAKE_CURRENT_SOURCE_DIR}/../rtl/data_memory_if.sv
-          ${CMAKE_CURRENT_SOURCE_DIR}/../rtl/data_memory.sv
-          ${CMAKE_CURRENT_SOURCE_DIR}/../rtl/instr_memory_if.sv
-          ${CMAKE_CURRENT_SOURCE_DIR}/../rtl/instr_memory.sv
-          ${CMAKE_CURRENT_SOURCE_DIR}/../rtl/jump_control.sv
-          ${CMAKE_CURRENT_SOURCE_DIR}/../rtl/control_unit.sv
-  		  ${CMAKE_CURRENT_SOURCE_DIR}/../rtl/alu_decoder.sv
-  		  ${CMAKE_CURRENT_SOURCE_DIR}/../rtl/main_decoder.sv
-          ${CMAKE_CURRENT_SOURCE_DIR}/../rtl/register_file.sv
-          ${CMAKE_CURRENT_SOURCE_DIR}/../rtl/imm_extend.sv
-          ${CMAKE_CURRENT_SOURCE_DIR}/../rtl/alu.sv  
-  		  ${CMAKE_CURRENT_SOURCE_DIR}/test_single_cycle_core.sv
+  SOURCES ${PROJECT_SOURCE_DIR}/rtl/rv32i_defs.sv
+		  ${PROJECT_SOURCE_DIR}/rtl/single_cycle_datapath.sv
+          ${PROJECT_SOURCE_DIR}/rtl/data_memory_if.sv
+          ${PROJECT_SOURCE_DIR}/rtl/data_memory.sv
+          ${PROJECT_SOURCE_DIR}/rtl/instr_memory_if.sv
+          ${PROJECT_SOURCE_DIR}/rtl/instr_memory.sv
+          ${PROJECT_SOURCE_DIR}/rtl/jump_control.sv
+          ${PROJECT_SOURCE_DIR}/rtl/control_unit.sv
+  		  ${PROJECT_SOURCE_DIR}/rtl/alu_decoder.sv
+  		  ${PROJECT_SOURCE_DIR}/rtl/main_decoder.sv
+          ${PROJECT_SOURCE_DIR}/rtl/register_file.sv
+          ${PROJECT_SOURCE_DIR}/rtl/imm_extend.sv
+          ${PROJECT_SOURCE_DIR}/rtl/alu.sv  
+  		  ${PROJECT_SOURCE_DIR}/test/test_single_cycle_core.sv
+)
+
+rvscc_add_test(
+  NAME five-stage-pipeline-core
+  TOP test_five_stage_pipeline_core
+  SOURCES ${PROJECT_SOURCE_DIR}/rtl/rv32i_defs.sv
+          ${PROJECT_SOURCE_DIR}/rtl/five_stage_pipeline_datapath.sv
+          ${PROJECT_SOURCE_DIR}/rtl/data_memory_if.sv
+          ${PROJECT_SOURCE_DIR}/rtl/data_memory.sv
+          ${PROJECT_SOURCE_DIR}/rtl/instr_memory_if.sv
+          ${PROJECT_SOURCE_DIR}/rtl/instr_memory.sv
+          ${PROJECT_SOURCE_DIR}/rtl/jump_control.sv
+          ${PROJECT_SOURCE_DIR}/rtl/control_unit.sv
+  		  ${PROJECT_SOURCE_DIR}/rtl/alu_decoder.sv
+  		  ${PROJECT_SOURCE_DIR}/rtl/main_decoder.sv
+          ${PROJECT_SOURCE_DIR}/rtl/register_file.sv
+          ${PROJECT_SOURCE_DIR}/rtl/imm_extend.sv
+          ${PROJECT_SOURCE_DIR}/rtl/alu.sv  
+          ${PROJECT_SOURCE_DIR}/rtl/hazard_unit.sv  
+  		  ${PROJECT_SOURCE_DIR}/test/test_five_stage_pipeline_core.sv
 )

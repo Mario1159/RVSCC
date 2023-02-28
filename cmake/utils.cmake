@@ -44,7 +44,7 @@ function(rvscc_add_test)
 	PREFIX verilator_${TEST_TOP}
 	TOP_MODULE ${TEST_TOP}
 	TRACE
-	VERILATOR_ARGS --timing --assert
+	VERILATOR_ARGS --timing --assert -I${PROJECT_SOURCE_DIR}/hwinc
   )
   target_compile_definitions(${TEST_TARGET_NAME} PRIVATE
     TEST_HEADER="verilator_${TEST_TOP}.h"

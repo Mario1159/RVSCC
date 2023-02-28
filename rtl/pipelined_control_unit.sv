@@ -1,6 +1,6 @@
-`timescale 1ns / 1ps
+`include "timescale.sv"
 
-module PipelinedControlUnit (
+module pipelined_control_unit (
     input logic [6:0] opcode,
     input logic [2:0] funct_3,
     input logic [6:0] funct_7,
@@ -12,35 +12,25 @@ module PipelinedControlUnit (
     output logic alu_src,
     output logic [1:0] imm_src
 );
-  //logic branch, branch_result, branch_neg, jump;
-  //assign pc_src = (branch & branch_result) | jump;
-  /*
-    always_comb begin
-        case(branch_neg)
-            'd0: branch_result = !zero;
-            'd1: branch_result = zero;
-        endcase
-    end*/
-
   logic [1:0] alu_op;
-  MainDecoder main_decoder (
-      opcode,
-      branch,
-      jump,
-      result_src,
-      mem_write,
-      alu_src,
-      imm_src,
-      reg_write,
-      alu_op
+  main_decoder main_decoder (
+      .opcode(opcode),
+      .branch(branch),
+      .jump(jump),
+      .result_src(result_src),
+      .mem_write(mem_write),
+      .alu_src(alu_src),
+      .imm_src(imm_src),
+      .reg_write(reg_write),
+      .alu_op(alu_op)
   );
 
-  ALUDecoder alu_decoder (
-      opcode[5],
-      funct_3,
-      funct_7[5],
-      alu_op,
-      alu_ctrl,
-      branch_neg
+  alu_decoder alu_decoder (
+      .opcode(opcode[5]),
+      .funct_3(funct_3),
+      .funct_7_5(funct_7[5]),
+      .alu_op(alu_op),
+      .alu_ctrl(alu_ctrl),
+      .branch_neg(branch_neg)
   );
 endmodule

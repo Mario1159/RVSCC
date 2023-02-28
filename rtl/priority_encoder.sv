@@ -1,4 +1,4 @@
-`timescale 1ns / 1ps
+`include "timescale.sv"
 
 // 2**N to N Priority encoder
 module priority_encoder #(

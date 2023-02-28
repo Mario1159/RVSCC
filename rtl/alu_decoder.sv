@@ -1,6 +1,6 @@
-`timescale 1ns / 1ps
+`include "timescale.sv"
 
-module alu_decoder(
+module alu_decoder (
     input logic opcode_5,
     input logic [2:0] funct_3,
     input logic funct_7_5,
