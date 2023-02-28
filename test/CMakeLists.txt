@@ -96,3 +96,10 @@ rvscc_add_test(
           ${PROJECT_SOURCE_DIR}/rtl/hazard_unit.sv  
   		  ${PROJECT_SOURCE_DIR}/test/test_five_stage_pipeline_core.sv
 )
+
+rvscc_add_test(
+	NAME cache-memory
+	TOP test_cache_memory
+	SOURCES ${PROJECT_SOURCE_DIR}/rtl/cache_memory.sv
+	        ${PROJECT_SOURCE_DIR}/test/test_cache_memory.sv
+)

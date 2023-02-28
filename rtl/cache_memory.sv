@@ -7,7 +7,7 @@ module cache_memory #(
     parameter int BLOCK_SIZE = 32
 ) (
     input logic clk,
-    rst,
+    input logic rst,
     input logic [WaySize - 1:0] way,
     input logic [SetSize - 1:0] set,
     input logic [TagSize - 1:0] tag,
@@ -29,7 +29,7 @@ module cache_memory #(
     logic valid;
   } cache_line_t;
 
-  typedef cache_line [NUM_SETS - 1:0] cache_way;
+  typedef cache_line_t [NUM_SETS - 1:0] cache_way;
   cache_way [NUM_WAYS - 1:0] ways;
 
   assign read_data = ways[way][set].data;
@@ -39,8 +39,8 @@ module cache_memory #(
       // Reset valid flags
       for (int i = 0; i < NUM_WAYS; i++) begin
         for (int j = 0; j < NUM_SETS; j++) begin
-          ways[i][j].data  <= 'dx;
-          ways[i][j].tag   <= 'dx;
+          ways[i][j].data  <= BLOCK_SIZE'('dx);
+          ways[i][j].tag   <= TagSize'('dx);
           ways[i][j].valid <= 0;
         end
       end
