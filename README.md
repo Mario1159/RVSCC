@@ -1,32 +1,34 @@
-# Collection of SystemVerilog simple RV32I CPU cores
+# RISC-V Simple Core Collection
+Collection of SystemVerilog RV32I cores and modules
 
 ## Table of contents
-- [Core list](#core-list)
+- [Features](#features)
 - [Directory structure](#directory-structure)
 - [Requirements](#requirements)
 - [Build](#build)
 - [Tests](#tests)
 - [Benchmark](#benchmark)
 
-## Core list
+## Features
 - Single cycle processor
 - 5-Stage pipelined processor with hazard detection
-- 5-Stage pipelined processor with N-way associative cache
+- N-Way associative cache memory
 
 ## Directory structure
     .
     ├── fw                   # Firmware
     │   ├── sandbox          # C/Assembly sandbox firmware source
     │   └── test             # Assembly programs used for testbenchs
-    ├── rtl                  # RTL Modules
+    ├── include              # SystemVerilog include directory
+    ├── rtl                  # SystemVerilog RTL modules
     └── test                 # SystemVerilog testbenchs
 
 ## Requirements
-- SystemVerilog simulator
+- Verilator or another SystemVerilog simulator
 - CMake
 - 32-bit GNU RISC-V toolchain
 
-> If your package manager does not provide the RISC-V GNU toolchain you can compile it from their [main repository](https://github.com/riscv-collab/riscv-gnu-toolchain) or for Windows you can download the [xPack pre-compiled binaries](https://github.com/xpack-dev-tools/riscv-none-elf-gcc-xpack/releases).
+> If your package manager does not provide the RISC-V GNU toolchain you can either download the binaries from the [xPack GNU RISC-V Embedded GCC](https://github.com/xpack-dev-tools/riscv-none-elf-gcc-xpack/releases) package or it can be compiled from their [main repository](https://github.com/riscv-collab/riscv-gnu-toolchain). Also you can take a look to the [docker enviroment](#docker-enviroment) provided.
 
 ### Docker enviroment
 
@@ -36,22 +38,21 @@ For getting docker check their [installation instruction site](https://docs.dock
 > - **WSL2** installed in case of Windows
 > - **Secure Boot disabled** and **Virtualization enabled** in your BIOS settings
 
-To set up the enviroment pull the image from the container registry and run it:
+To set up the enviroment you can create a [dev enviroment](https://docs.docker.com/desktop/dev-environments) pointing to this repository or you can pull the image directly from the container registry and then run it:
 ```
 docker pull git.1159.cl/mario1159/rvscc
 docker run -it git.1159.cl/mario1159/rvscc
 ```
 
 ## Build
-To build the firmware that will be loaded in the instruction memory execute CMake in the `fw` directory specifying the RISC-V toolchain and build the recipe based in your selected generator (`make` in the following example).
+To build the firmware that will be loaded in the instruction memory and the simulation testbenchs execute CMake in the project root directory using your system default toolchain (the [CMake toolchain file](cmake/riscv-toolchain.cmake) will search automatically for a RISC-V toolchain to build the firmware).
 ```
 cmake -Bbuild
 cmake --build build
 ```
-This will generate a `sandbox.mem` file in the `/build` folder. To load the file in the simulation make sure to add it to your simulator sources and that the memory path matches the path specifies in the memory module.
+This will generate a `sandbox.mem` file in the `/build` folder. For other simualtors than verilator make sure to add the firmware it to your simulator sources and that the memory path matches the path specified in the memory module.
 ## Tests
+After building, test can be runned using CMake CTest.
 ```
 ctest --test-dir build
 ```
-## Benchmark
-(TODO)
