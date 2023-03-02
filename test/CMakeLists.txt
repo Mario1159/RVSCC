@@ -101,5 +101,6 @@ rvscc_add_test(
 	NAME cache-memory
 	TOP test_cache_memory
 	SOURCES ${PROJECT_SOURCE_DIR}/rtl/cache_memory.sv
+  			${PROJECT_SOURCE_DIR}/rtl/priority_encoder.sv
 	        ${PROJECT_SOURCE_DIR}/test/test_cache_memory.sv
 )

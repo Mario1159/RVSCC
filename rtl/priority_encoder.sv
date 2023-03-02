@@ -9,7 +9,7 @@ module priority_encoder #(
     output logic valid
 );
   always_comb begin
-    data_out = 3'dx;
+    data_out = N'('dx);
     for (int i = 0; i < 2 ** N; i++) begin
       if (data_in[i]) data_out = i[N-1:0];
     end

@@ -22,21 +22,21 @@ module cache_memory #(
   localparam int WaySize = $clog2(NUM_WAYS);
   localparam int SetSize = $clog2(NUM_SETS);
   localparam int TagSize = ADDR_SIZE - SetSize - ByteOffsetSize;
-  
+
   logic [NUM_WAYS - 1:0] hits;
   logic [WaySize-1:0] way;
   logic [WaySize-1:0] read_way;
-  priority_encoder #(.N(WaySize)) read_way_encoder (
+  priority_encoder #(
+      .N(WaySize)
+  ) read_way_encoder (
       .data_in(hits),
       .data_out(read_way),
       .valid(hit)
   );
-  
+
   always_comb begin
-    if(write_enable)
-        way = write_way;
-    else
-        way = read_way;
+    if (write_enable) way = write_way;
+    else way = read_way;
   end
 
   typedef struct packed {
@@ -66,7 +66,7 @@ module cache_memory #(
       ways[way][set].valid <= 1;
     end
   end
-  
+
   logic [NUM_WAYS - 1:0] valid_flags;
   always_comb begin
     for (int i = 0; i < NUM_WAYS; i++) begin
@@ -74,10 +74,12 @@ module cache_memory #(
       hits[i] = ways[i][set].valid && (tag == ways[i][set].tag);
     end
   end
-  
-  priority_encoder #(.N(WaySize)) populate_way_encoder (
-    .data_in(valid_flags),
-    .data_out(populate_way),
-    .valid('dz)
+
+  priority_encoder #(
+      .N(WaySize)
+  ) populate_way_encoder (
+      .data_in(valid_flags),
+      .data_out(populate_way),
+      .valid()
   );
 endmodule

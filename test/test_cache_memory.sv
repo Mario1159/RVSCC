@@ -10,7 +10,7 @@ module test_cache_memory ();
   logic write_enable;
   logic [31:0] write_data;
   logic [31:0] read_data;
-  logic read_valid;
+  logic hit;
   logic [dut.WaySize-1:0] populate_way;
   cache_memory #(
       .ADDR_SIZE (32),
@@ -26,7 +26,7 @@ module test_cache_memory ();
       .write_enable(write_enable),
       .write_data(write_data),
       .read_data(read_data),
-      .read_valid(read_valid),
+      .hit(hit),
       .populate_way(populate_way)
   );
 
@@ -51,12 +51,12 @@ module test_cache_memory ();
     write_enable = 0;
     tag += 1;
     #1;
-    assert (read_valid == 0)
+    assert (hit == 0)
     else $error("Valid flags does not match");
     #ClockCycle;
     tag -= 1;
     #1;
-    assert (read_valid == 1)
+    assert (hit == 1)
     else $error("Valid flags does not match");
     $finish;
   end
