@@ -7,7 +7,6 @@ Collection of SystemVerilog RV32I cores and modules
 - [Requirements](#requirements)
 - [Build](#build)
 - [Tests](#tests)
-- [Benchmark](#benchmark)
 
 ## Features
 - Single cycle processor
@@ -21,6 +20,7 @@ Collection of SystemVerilog RV32I cores and modules
     │   └── test             # Assembly programs used for testbenchs
     ├── include              # SystemVerilog include directory
     ├── rtl                  # SystemVerilog RTL modules
+    ├── scripts              # Utility scripts
     └── test                 # SystemVerilog testbenchs
 
 ## Requirements
@@ -50,9 +50,14 @@ To build the firmware that will be loaded in the instruction memory and the simu
 cmake -Bbuild
 cmake --build build
 ```
-This will generate a `sandbox.mem` file in the `/build` folder. For other simualtors than verilator make sure to add the firmware it to your simulator sources and that the memory path matches the path specified in the memory module.
+This will generate a `sandbox.mem` file in the `/build/fw/sandbox` folder. For other simualtors than verilator make sure to add the firmware it to your simulator sources and that the memory path matches the path specified in the memory module.
 ## Tests
-After building, test can be runned using CMake CTest.
+After building, tests can be runned using CMake CTest.
 ```
 ctest --test-dir build
+```
+## Sandbox
+For experimenting with a custom firmware, configure the project with one from the following options and use the examples in the [sandbox](fw/sandbox) folder.
+```
+cmake -Bbuild [-DSANDBOX_ASM=ON] [-DSANDBOX_C=ON]
 ```
