@@ -15,17 +15,17 @@ module two_way_lru_cache #(
 );
   localparam int NumWays = 2;
   localparam int NumBlockBytes = BLOCK_SIZE / 4;
-  localparam int ByteOffsetSize = $clog2(NUM_BLOCK_BYTES);
-  localparam int WaySize = $clog2(NUM_WAYS);
+  localparam int ByteOffsetSize = $clog2(NumBlockBytes);
+  localparam int WaySize = $clog2(NumWays);
   localparam int SetSize = $clog2(NUM_SETS);
-  localparam int TagSize = ADDR_SIZE - SET_SIZE - BYTE_OFFSET_SIZE;
+  localparam int TagSize = ADDR_SIZE - SetSize - ByteOffsetSize;
 
-  logic [NUM_WAYS - 1:0] valid_flags;
-  logic [NUM_WAYS - 1:0] hits;
+  logic [$clog2(NumWays) - 1:0] populate_way;
+  logic read_valid;
 
-  logic [WAY_SIZE - 1:0] way;
-  logic [SET_SIZE - 1:0] set;
-  logic [TAG_SIZE - 1:0] tag;
+  logic [WaySize - 1:0] way;
+  logic [SetSize - 1:0] set;
+  logic [TagSize - 1:0] tag;
 
   cache_memory #(
       .ADDR_SIZE (ADDR_SIZE),
@@ -35,20 +35,20 @@ module two_way_lru_cache #(
   ) cache_memory (
       .clk(clk),
       .rst(rst),
-      .way(way),
+      .write_way(write_way),
       .set(set),
       .tag(tag),
       .write_enable(write_enable),
       .write_data(write_data),
       .read_data(read_data),
-      .hits(hits),
-      .valid_flags(valid_flags)
+      .populate_way(populate_way),
+      .hit(hit)
   );
 
   two_way_lru_cru #(
       .ADDR_SIZE (ADDR_SIZE),
       .NUM_SETS  (NUM_SETS),
-      .BLOCK_SIZE
+      .BLOCK_SIZE(BLOCK_SIZE)
   ) cache_replace_unit (
       .clk(clk),
       .rst(rst),
@@ -60,19 +60,16 @@ module two_way_lru_cache #(
   cache_controller #(
       .ADDR_SIZE (ADDR_SIZE),
       .NUM_SETS  (NUM_SETS),
-      .NUM_WAYS  (NUM_WAYS),
+      .NUM_WAYS  (NumWays),
       .BLOCK_SIZE(BLOCK_SIZE)
   ) cache_controller (
-      .clk(clk),
       .addr(addr),
       .write_enable(write_enable),
       .replace_way(replace_preferred_way),
-      .hits(hits),
-      .valid_flags(valid_flags),
+      .populate_way(populate_way),
+      .cru_enable(cru_enable),
+      .write_way(write_way),
       .set(set),
-      .tag(tag),
-      .way(way),
-      .hit(hit),
-      .cru_enable(cru_enable)
+      .tag(tag)
   );
 endmodule

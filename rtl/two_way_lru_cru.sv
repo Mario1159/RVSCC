@@ -13,8 +13,8 @@ module two_way_lru_cru #(
 );
   localparam int NumBlocksBytes = BLOCK_SIZE / 4;
   localparam int ByteOffsetSize = $clog2(NumBlocksBytes);
-  localparam int SetSize = $clog2(NumSets);
-  localparam int TagSize = ADDR_SIZE - SetSize - ByteOffSetSize;
+  localparam int SetSize = $clog2(NUM_SETS);
+  localparam int TagSize = ADDR_SIZE - SetSize - ByteOffsetSize;
 
   typedef struct packed {
     logic [ByteOffsetSize - 1:0] byte_offset;

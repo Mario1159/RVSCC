@@ -8,20 +8,36 @@ module cache_memory #(
 ) (
     input logic clk,
     input logic rst,
-    input logic [WaySize - 1:0] way,
-    input logic [SetSize - 1:0] set,
-    input logic [TagSize - 1:0] tag,
+    input logic [$clog2(NUM_WAYS) - 1:0] write_way,
+    input logic [$clog2(NUM_SETS) - 1:0] set,
+    input logic [ADDR_SIZE - $clog2(NUM_SETS) - $clog2(BLOCK_SIZE / 4) - 1:0] tag,
     input logic write_enable,
     input logic [BLOCK_SIZE - 1:0] write_data,
     output logic [BLOCK_SIZE - 1:0] read_data,
-    output logic [NUM_WAYS - 1:0] hits,
-    output logic [NUM_WAYS - 1:0] valid_flags
+    output logic [$clog2(NUM_WAYS) - 1:0] populate_way,
+    output logic hit
 );
   localparam int NumBlockBytes = BLOCK_SIZE / 4;
   localparam int ByteOffsetSize = $clog2(NumBlockBytes);
   localparam int WaySize = $clog2(NUM_WAYS);
   localparam int SetSize = $clog2(NUM_SETS);
   localparam int TagSize = ADDR_SIZE - SetSize - ByteOffsetSize;
+  
+  logic [NUM_WAYS - 1:0] hits;
+  logic [WaySize-1:0] way;
+  logic [WaySize-1:0] read_way;
+  priority_encoder #(.N(WaySize)) read_way_encoder (
+      .data_in(hits),
+      .data_out(read_way),
+      .valid(hit)
+  );
+  
+  always_comb begin
+    if(write_enable)
+        way = write_way;
+    else
+        way = read_way;
+  end
 
   typedef struct packed {
     logic [BLOCK_SIZE - 1:0] data;
@@ -50,10 +66,18 @@ module cache_memory #(
       ways[way][set].valid <= 1;
     end
   end
+  
+  logic [NUM_WAYS - 1:0] valid_flags;
   always_comb begin
     for (int i = 0; i < NUM_WAYS; i++) begin
       valid_flags[i] = ways[i][set].valid;
       hits[i] = ways[i][set].valid && (tag == ways[i][set].tag);
     end
   end
+  
+  priority_encoder #(.N(WaySize)) populate_way_encoder (
+    .data_in(valid_flags),
+    .data_out(populate_way),
+    .valid('dz)
+  );
 endmodule

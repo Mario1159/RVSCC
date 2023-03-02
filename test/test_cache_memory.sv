@@ -4,14 +4,14 @@ module test_cache_memory ();
   logic clk;
   logic rst;
 
-  logic [dut.WaySize-1:0] way;
+  logic [dut.WaySize-1:0] write_way;
   logic [dut.SetSize-1:0] set;
   logic [dut.TagSize-1:0] tag;
   logic write_enable;
   logic [31:0] write_data;
   logic [31:0] read_data;
-  logic [1:0] hits;
-  logic [1:0] valid_flags;
+  logic read_valid;
+  logic [dut.WaySize-1:0] populate_way;
   cache_memory #(
       .ADDR_SIZE (32),
       .NUM_SETS  (4),
@@ -20,30 +20,28 @@ module test_cache_memory ();
   ) dut (
       .clk(clk),
       .rst(rst),
-      .way(way),
+      .write_way(write_way),
       .set(set),
       .tag(tag),
       .write_enable(write_enable),
       .write_data(write_data),
       .read_data(read_data),
-      .hits(hits),
-      .valid_flags(valid_flags)
+      .read_valid(read_valid),
+      .populate_way(populate_way)
   );
 
   localparam int ClockCycle = 2;
-  always #ClockCycle clk = !clk;
+  always #(ClockCycle/2) clk = !clk;
 
   logic [31:0] write_value;
 
   initial begin
-    $dumpfile("cache.vcd");
-    $dumpvars;
     clk = 0;
     rst = 1;
     #ClockCycle;
     rst = 0;
 
-    way = 0;
+    write_way = 0;
     set = 0;
     tag = 27'($urandom);
     write_enable = 1;
@@ -52,11 +50,13 @@ module test_cache_memory ();
     #ClockCycle;
     write_enable = 0;
     tag += 1;
-    assert (valid_flags == 'b00)
-    else $error("Valid flags does not match");
     #1;
+    assert (read_valid == 0)
+    else $error("Valid flags does not match");
+    #ClockCycle;
     tag -= 1;
-    assert (valid_flags == 'b01)
+    #1;
+    assert (read_valid == 1)
     else $error("Valid flags does not match");
     $finish;
   end
