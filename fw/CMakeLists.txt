@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(firmware)
+project(firmware C ASM)
 
 option(TEST "Enable test firmware compilation" ON)
 option(SANDBOX_ASM "Enable sandbox compilation using ASM language" OFF)
