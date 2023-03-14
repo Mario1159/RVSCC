@@ -1,5 +1,5 @@
 # RVSCC developer enviroment
-FROM alpine
+FROM alpine:edge
 MAINTAINER Mario Romero <mario@1159.cl>
 
 # Install packages
