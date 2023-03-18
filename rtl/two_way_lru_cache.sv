@@ -5,13 +5,7 @@ module two_way_lru_cache #(
     parameter int NUM_SETS   = 16,
     parameter int BLOCK_SIZE = 32
 ) (
-    input logic clk,
-    input logic rst,
-    input logic [ADDR_SIZE - 1:0] addr,
-    input logic write_enable,
-    input logic [BLOCK_SIZE - 1:0] write_data,
-    output logic [BLOCK_SIZE - 1:0] read_data,
-    output logic hit
+    data_memory_if.cache data_mem_if
 );
   localparam int NumWays = 2;
   localparam int NumBlockBytes = BLOCK_SIZE / 4;
@@ -33,16 +27,17 @@ module two_way_lru_cache #(
       .NUM_WAYS  (NumWays),
       .BLOCK_SIZE(BLOCK_SIZE)
   ) cache_memory (
-      .clk(clk),
-      .rst(rst),
+      .clk(data_mem_if.clk),
+      .rst(data_mem_if.rst),
       .write_way(write_way),
       .set(set),
       .tag(tag),
-      .write_enable(write_enable),
-      .write_data(write_data),
-      .read_data(read_data),
+      .write_enable(data_mem_if.write_enable),
+      .write_data(data_mem_if.write_data),
+      .read_data(data_mem_if.read_data),
       .populate_way(populate_way),
-      .hit(hit)
+      .populated(populated),
+      .hit(data_mem_if.hit)
   );
 
   two_way_lru_cru #(
@@ -50,9 +45,9 @@ module two_way_lru_cache #(
       .NUM_SETS  (NUM_SETS),
       .BLOCK_SIZE(BLOCK_SIZE)
   ) cache_replace_unit (
-      .clk(clk),
-      .rst(rst),
-      .addr(addr),
+      .clk(data_mem_if.clk),
+      .rst(data_mem_if.rst),
+      .addr(data_mem_if.addr),
       .replace(cru_enable),
       .preferred(replace_preferred_way)
   );
@@ -63,10 +58,11 @@ module two_way_lru_cache #(
       .NUM_WAYS  (NumWays),
       .BLOCK_SIZE(BLOCK_SIZE)
   ) cache_controller (
-      .addr(addr),
-      .write_enable(write_enable),
+      .addr(data_mem_if.addr),
+      .write_enable(data_mem_if.write_enable),
       .replace_way(replace_preferred_way),
       .populate_way(populate_way),
+      .populated(populated),
       .cru_enable(cru_enable),
       .write_way(write_way),
       .set(set),

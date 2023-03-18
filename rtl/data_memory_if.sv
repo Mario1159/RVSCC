@@ -11,11 +11,12 @@ interface data_memory_if #(
   logic write_enable;
   logic [DATA_SIZE-1:0] write_data;
   logic [DATA_SIZE-1:0] read_data;
-  logic valid;
+  logic hit;
   logic ready;
 
   modport datapath(input read_data, output addr, write_enable, write_data);
   modport ram(input clk, rst, addr, write_enable, write_data, output read_data);
+  modport cache(input clk, rst, addr, write_enable, write_data, output read_data, hit);
   modport test(input read_data, write_enable, write_data);
 
   /*

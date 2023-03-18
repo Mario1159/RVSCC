@@ -15,6 +15,7 @@ module cache_memory #(
     input logic [BLOCK_SIZE - 1:0] write_data,
     output logic [BLOCK_SIZE - 1:0] read_data,
     output logic [$clog2(NUM_WAYS) - 1:0] populate_way,
+    output logic populated,
     output logic hit
 );
   localparam int NumBlockBytes = BLOCK_SIZE / 4;
@@ -75,11 +76,28 @@ module cache_memory #(
     end
   end
 
+  logic valid_flags_index_valid;
+  logic[WaySize-1:0] valid_flags_index;
+
   priority_encoder #(
       .N(WaySize)
   ) populate_way_encoder (
       .data_in(valid_flags),
-      .data_out(populate_way),
-      .valid()
+      .data_out(valid_flags_index),
+      .valid(valid_flags_index_valid)
   );
+  /*
+  generate
+    if (WaySize > 1)
+        always_comb populated &= populate_way;
+    else
+        assign populated = populate_way;
+  endgenerate*/
+  
+  always_comb begin
+    if(valid_flags_index_valid)
+        {populated, populate_way} = valid_flags_index + 'd1;
+    else
+        {populated, populate_way} = 'd0;
+  end
 endmodule

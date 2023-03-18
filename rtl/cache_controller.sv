@@ -10,6 +10,7 @@ module cache_controller #(
     input logic write_enable,
     input logic [$clog2(NUM_WAYS) - 1:0] replace_way,
     input logic [$clog2(NUM_WAYS) - 1:0] populate_way,
+    input logic populated,
     output logic cru_enable,
     output logic [$clog2(NUM_WAYS) - 1:0] write_way,
     output logic [$clog2(NUM_SETS) - 1:0] set,
@@ -22,9 +23,9 @@ module cache_controller #(
   localparam int WaySize = $clog2(NUM_WAYS);
 
   typedef struct packed {
-    logic [ByteOffsetSize - 1:0] byte_offset;
-    logic [SetSize - 1:0] set;
     logic [TagSize - 1:0] tag;
+    logic [SetSize - 1:0] set;
+    logic [ByteOffsetSize - 1:0] byte_offset;
   } cache_addr_t;
 
   typedef enum logic [1:0] {
@@ -36,15 +37,12 @@ module cache_controller #(
   cache_addr_t  packed_addr;
   cache_state_t state;
 
-  logic [WaySize - 1:0]  next_populate_way;
- 
-  logic valid;
   always_comb begin
     packed_addr = cache_addr_t'(addr);
     set = packed_addr.set;
     tag = packed_addr.tag;
 
-    state = cache_state_t'{write_enable, valid};
+    state = cache_state_t'{write_enable, populated};
     case (state)
       READ: begin
         cru_enable = 0;
@@ -52,7 +50,7 @@ module cache_controller #(
       end
       WRITE_POPULATE: begin
         cru_enable = 0;
-        write_way = next_populate_way;
+        write_way = populate_way;
       end
       WRITE_REPLACE: begin
         cru_enable = 1;
@@ -63,6 +61,6 @@ module cache_controller #(
         write_way = 'dx;
       end
     endcase
-    next_populate_way = populate_way + 'd1;
   end
+
 endmodule

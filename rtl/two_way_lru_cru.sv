@@ -29,7 +29,7 @@ module two_way_lru_cru #(
 
   assign preferred = lru[packed_addr.set];
   always_ff @(posedge clk) begin
-    if (rst) lru[packed_addr.set] <= 0;
+    if (rst) lru <= 'd0;
     else if (replace) begin
       lru[packed_addr.set] <= !lru[packed_addr.set];
     end
