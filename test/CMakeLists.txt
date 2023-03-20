@@ -50,8 +50,7 @@ rvscc_add_test(
 )
 
 rvscc_add_test(
-  NAME instruction_memory
-  TOP test_instr_memory
+  NAME instruction_memory TOP test_instr_memory
   SOURCES ${PROJECT_SOURCE_DIR}/rtl/rv32i_defs.sv
           ${PROJECT_SOURCE_DIR}/rtl/instr_memory_if.sv
           ${PROJECT_SOURCE_DIR}/rtl/instr_memory.sv
@@ -111,7 +110,9 @@ rvscc_add_test(
   	SOURCES ${PROJECT_SOURCE_DIR}/rtl/rv32i_defs.sv
 			${PROJECT_SOURCE_DIR}/rtl/two_way_lru_cache.sv
 			${PROJECT_SOURCE_DIR}/rtl/two_way_lru_cru.sv
+            ${PROJECT_SOURCE_DIR}/rtl/data_memory_if.sv
 			${PROJECT_SOURCE_DIR}/rtl/cache_memory.sv
+			${PROJECT_SOURCE_DIR}/rtl/cache_controller.sv
   			${PROJECT_SOURCE_DIR}/rtl/priority_encoder.sv
 	        ${PROJECT_SOURCE_DIR}/test/test_two_way_lru_cache.sv
 )

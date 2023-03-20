@@ -18,7 +18,7 @@ module two_way_lru_cru #(
 
   typedef struct packed {
     logic [ByteOffsetSize - 1:0] byte_offset;
-    logic [SetSize - 1:0] set;
+    logic [SetSize - 1:0] xset;
     logic [TagSize - 1:0] tag;
   } cache_addr_t;
 
@@ -27,11 +27,11 @@ module two_way_lru_cru #(
 
   logic [NUM_SETS - 1:0] lru;
 
-  assign preferred = lru[packed_addr.set];
+  assign preferred = lru[packed_addr.xset];
   always_ff @(posedge clk) begin
     if (rst) lru <= 'd0;
     else if (replace) begin
-      lru[packed_addr.set] <= !lru[packed_addr.set];
+      lru[packed_addr.xset] <= !lru[packed_addr.xset];
     end
   end
 endmodule

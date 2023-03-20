@@ -18,9 +18,11 @@ module two_way_lru_cache #(
   logic read_valid;
 
   logic [WaySize - 1:0] way;
-  logic [SetSize - 1:0] set;
+  logic [SetSize - 1:0] xset;
   logic [TagSize - 1:0] tag;
 
+  logic write_way;
+  logic populated;
   cache_memory #(
       .ADDR_SIZE (ADDR_SIZE),
       .NUM_SETS  (NUM_SETS),
@@ -30,7 +32,7 @@ module two_way_lru_cache #(
       .clk(data_mem_if.clk),
       .rst(data_mem_if.rst),
       .write_way(write_way),
-      .set(set),
+      .set(xset),
       .tag(tag),
       .write_enable(data_mem_if.write_enable),
       .write_data(data_mem_if.write_data),
@@ -40,6 +42,8 @@ module two_way_lru_cache #(
       .hit(data_mem_if.hit)
   );
 
+  logic cru_enable;
+  logic replace_preferred_way;
   two_way_lru_cru #(
       .ADDR_SIZE (ADDR_SIZE),
       .NUM_SETS  (NUM_SETS),
@@ -65,7 +69,7 @@ module two_way_lru_cache #(
       .populated(populated),
       .cru_enable(cru_enable),
       .write_way(write_way),
-      .set(set),
+      .set(xset),
       .tag(tag)
   );
 endmodule
