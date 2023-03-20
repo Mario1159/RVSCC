@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module Test_TwoWayLRUCache();
+module test_two_way_lru_cache();
     logic clk, rst;
     logic[31:0] addr;
     logic write_enable;

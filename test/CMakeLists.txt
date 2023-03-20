@@ -104,3 +104,14 @@ rvscc_add_test(
   			${PROJECT_SOURCE_DIR}/rtl/priority_encoder.sv
 	        ${PROJECT_SOURCE_DIR}/test/test_cache_memory.sv
 )
+
+rvscc_add_test(
+	NAME two-way-lru-cache
+	TOP test_two_way_lru_cache
+  	SOURCES ${PROJECT_SOURCE_DIR}/rtl/rv32i_defs.sv
+			${PROJECT_SOURCE_DIR}/rtl/two_way_lru_cache.sv
+			${PROJECT_SOURCE_DIR}/rtl/two_way_lru_cru.sv
+			${PROJECT_SOURCE_DIR}/rtl/cache_memory.sv
+  			${PROJECT_SOURCE_DIR}/rtl/priority_encoder.sv
+	        ${PROJECT_SOURCE_DIR}/test/test_two_way_lru_cache.sv
+)

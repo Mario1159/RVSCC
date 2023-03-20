@@ -27,11 +27,12 @@ module test_cache_memory ();
       .write_data(write_data),
       .read_data(read_data),
       .hit(hit),
-      .populate_way(populate_way)
+      .populate_way(populate_way),
+      .populated()
   );
 
   localparam int ClockCycle = 2;
-  always #(ClockCycle/2) clk = !clk;
+  always #(ClockCycle / 2) clk = !clk;
 
   logic [31:0] write_value;
 
