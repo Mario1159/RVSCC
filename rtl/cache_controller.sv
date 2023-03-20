@@ -24,7 +24,7 @@ module cache_controller #(
 
   typedef struct packed {
     logic [TagSize - 1:0] tag;
-    logic [SetSize - 1:0] addr_set;
+    logic [SetSize - 1:0] xset;
     logic [ByteOffsetSize - 1:0] byte_offset;
   } cache_addr_t;
 
@@ -39,7 +39,7 @@ module cache_controller #(
 
   always_comb begin
     packed_addr = cache_addr_t'(addr);
-    set = packed_addr.addr_set;
+    set = packed_addr.xset;
     tag = packed_addr.tag;
 
     state = cache_state_t'({write_enable, populated});
