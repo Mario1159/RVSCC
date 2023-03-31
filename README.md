@@ -1,12 +1,13 @@
-# RISC-V Simple Core Collection
-Collection of SystemVerilog RV32I cores and modules
+---
+gitea: none
+title: hello
+include_toc: true
+---
+[![License: LGPL v3](https://img.shields.io/badge/License-LGPL_v3-blue.svg)](https://www.gnu.org/licenses/lgpl-3.0)
 
-## Table of contents
-- [Features](#features)
-- [Directory structure](#directory-structure)
-- [Requirements](#requirements)
-- [Build](#build)
-- [Tests](#tests)
+# RISC-V Simple Core Collection
+
+Collection of SystemVerilog RV32I cores and modules
 
 ## Features
 - Single cycle processor
