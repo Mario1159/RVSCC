@@ -52,13 +52,18 @@ cmake -Bbuild
 cmake --build build
 ```
 This will generate a `sandbox.mem` file in the `/build/fw/sandbox` folder. For other simualtors than verilator make sure to add the firmware it to your simulator sources and that the memory path matches the path specified in the memory module.
+
 ## Tests
 After building, tests can be runned using CMake CTest.
 ```
 ctest --test-dir build
 ```
+
 ## Sandbox
 For experimenting with a custom firmware, configure the project with one from the following options and use the examples in the [sandbox](fw/sandbox) folder.
 ```
 cmake -Bbuild [-DSANDBOX_ASM=ON] [-DSANDBOX_C=ON]
 ```
+
+## Documentation
+More information including documentation about each module can be found in the [Wiki](https://git.1159.cl/Mario1159/RVSCC/wiki).
