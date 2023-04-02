@@ -6,6 +6,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - run: apt update
-      - run: apt install build-essential cmake verilator
-      - run: cmake -Bbuild
+      - name: Update repository
+        run: apt update
+      - name: Install Packages
+        run: apt install -y build-essential cmake verilator
+      - name: Build
+        run: cmake -Bbuild
