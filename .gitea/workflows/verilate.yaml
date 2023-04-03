@@ -12,7 +12,7 @@ jobs:
         run: apt install -y build-essential cmake wget
       - name: Install verilator from pre-built binary
         run: |
-          wget --content-on-error -O verilator-aarch64.tar.gz "https://git.1159.cl/attachments/3bee5174-4c41-476f-8874-a35ffba0f512" || true
+          wget -O verilator-aarch64.tar.gz https://git.1159.cl/attachments/d1f82da6-b9d6-4e5d-9785-37801eb4d7b2
           mkdir verilator
           tar xvzf verilator-aarch64.tar.gz -C verilator
           mv verilator/* /usr/bin
