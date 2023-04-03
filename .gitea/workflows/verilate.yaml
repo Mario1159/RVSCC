@@ -8,7 +8,12 @@ jobs:
         uses: actions/checkout@v3
       - name: Update repository
         run: apt update
-      - name: Install Packages
-        run: apt install -y build-essential cmake verilator
+      - name: Install packages
+        run: apt install -y build-essential cmake wget
+      - name: Install verilator from pre-built binary
+        run: |
+          wget https://git.1159.cl/attachments/3bee5174-4c41-476f-8874-a35ffba0f512
+          tar xzvf verilator-aarch64.tar.gz -C verilator
+          mv verilator /usr/bin
       - name: Build
         run: cmake -Bbuild
