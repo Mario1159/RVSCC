@@ -15,6 +15,8 @@ jobs:
           wget -O verilator-aarch64.tar.gz https://git.1159.cl/attachments/d1f82da6-b9d6-4e5d-9785-37801eb4d7b2
           mkdir verilator
           tar xvzf verilator-aarch64.tar.gz -C verilator
+          which verilator
+          echo "$(ls -l /usr/bin)"
           mv verilator/* /usr/bin
       - name: Build
         run: cmake -Bbuild
