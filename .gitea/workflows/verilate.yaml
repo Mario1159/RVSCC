@@ -16,6 +16,7 @@ jobs:
           mkdir verilator
           tar xvzf verilator-aarch64.tar.gz -C verilator
           mv verilator/* /usr/bin
-          export VERILATOR_ROOT=/usr/bin
       - name: Build
-        run: cmake -Bbuild
+        run: |
+          export VERILATOR_ROOT=/usr/bin
+          cmake -Bbuild
