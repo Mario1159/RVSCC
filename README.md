@@ -51,7 +51,7 @@ To build the firmware that will be loaded in the instruction memory and the simu
 cmake -Bbuild
 cmake --build build
 ```
-This will generate a `sandbox.mem` file in the `/build/fw/sandbox` folder. For other simualtors than verilator make sure to add the firmware it to your simulator sources and that the memory path matches the path specified in the memory module.
+This will generate a `sandbox.mem` file in the `/build/fw/sandbox` folder. For other simulators than Verilator make sure to add the firmware into your simulator sources and that the memory path matches the path specified in the memory module.
 
 ## Tests
 After building, tests can be runned using CMake CTest.
