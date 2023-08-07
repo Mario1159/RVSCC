@@ -42,7 +42,8 @@ For getting docker check their [installation instruction site](https://docs.dock
 To set up the enviroment you can create a [dev enviroment](https://docs.docker.com/desktop/dev-environments) pointing to this repository or you can pull the image directly from the container registry and then run it:
 ```
 docker pull git.1159.cl/mario1159/rvscc
-docker run -it git.1159.cl/mario1159/rvscc
+docker run -d --name rvscc git.1159.cl/mario1159/rvscc
+docker exec -it rvscc sh
 ```
 
 ## Build
