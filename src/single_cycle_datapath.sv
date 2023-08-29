@@ -5,8 +5,11 @@ import rv32i_defs::*;
 module single_cycle_datapath (
     input logic clk,
     input logic rst,
-    instr_memory_if.datapath instr_mem_if,
-    data_memory_if.datapath data_mem_if
+    input logic[31:0] instr,
+    output logic[31:0] addr,
+    output logic[31:0] alu_result,
+    input logic[31:0] read_data,
+    output logic write_enable,
 );
   logic [InstructionSize-1:0] pc, pc_next;
   logic [OperandSize-1:0] imm_ext;
@@ -27,7 +30,7 @@ module single_cycle_datapath (
     else pc <= pc_next;
   end
 
-  assign instr_mem_if.addr = instr_mem_if.AddrSize'(pc);
+  assign addr = instr_mem_if.AddrSize'(pc);
 
   logic reg_write;
   logic [OperandSize-1:0] read_data_1, read_data_2;
@@ -35,9 +38,9 @@ module single_cycle_datapath (
   register_file register_file (
       .clk(clk),
       .rst(rst),
-      .addr_1(instr_mem_if.instr[19:15]),
-      .addr_2(instr_mem_if.instr[24:20]),
-      .addr_3(instr_mem_if.instr[11:7]),
+      .addr_1(instr[19:15]),
+      .addr_2(instr[24:20]),
+      .addr_3(instr[11:7]),
       .write_enable_3(reg_write),
       .write_data_3(result),
       .read_data_1(read_data_1),
@@ -53,11 +56,11 @@ module single_cycle_datapath (
   logic branch;
   logic branch_alu_neg;
   control_unit control_unit (
-      .opcode(instr_mem_if.instr[6:0]),
-      .funct_3(instr_mem_if.instr[14:12]),
-      .funct_7(instr_mem_if.instr[31:25]),
+      .opcode(instr[6:0]),
+      .funct_3(instr[14:12]),
+      .funct_7(instr[31:25]),
       .result_src(result_src),
-      .mem_write(data_mem_if.write_enable),
+      .mem_write(write_enable),
       .alu_ctrl(alu_ctrl),
       .alu_src(alu_src),
       .imm_src(imm_src),
@@ -77,7 +80,7 @@ module single_cycle_datapath (
 
   imm_extend imm_extend (
       .imm_src(imm_src[1:0]),
-      .instr  (instr_mem_if.instr[31:7]),
+      .instr  (instr[31:7]),
       .imm_ext(imm_ext[31:0])
   );
 
@@ -101,13 +104,10 @@ module single_cycle_datapath (
       .status(alu_status)
   );
 
-  assign data_mem_if.write_data = read_data_2;
-  assign data_mem_if.addr = alu_result;
-
   always_comb begin
     case (result_src)
       'b00: result = alu_result;
-      'b01: result = data_mem_if.read_data;
+      'b01: result = read_data;
       'b10: result = pc + 'd4;
       'b11: result = 'dx;
       default: result = 'dx;
