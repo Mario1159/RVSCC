@@ -15,12 +15,12 @@ module tt_um_mario1159_rv32core (
 
   single_cycle_datapath dut (
       .clk(clk),
-      .rst(rst),
+      .rst(!rst_n),
       .instr(ui_in[7:0]),
       .addr(),
       .alu_result(uo_out[7:0]),
       .read_data('d0),
       .write_enable(),
   );
-  
+
 endmodule

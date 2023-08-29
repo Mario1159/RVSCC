@@ -18,10 +18,9 @@ module tt_um_mario1159_rv32core (
 	input wire rst_n;
 	assign uio_oe[7:0] = 'd0;
 	assign uio_out[7:0] = 'bz;
-	wire rst;
 	single_cycle_datapath dut(
 		.clk(clk),
-		.rst(rst),
+		.rst(!rst_n),
 		.instr(ui_in[7:0]),
 		.addr(),
 		.alu_result(uo_out[7:0]),
