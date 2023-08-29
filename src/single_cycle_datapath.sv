@@ -30,7 +30,7 @@ module single_cycle_datapath (
     else pc <= pc_next;
   end
 
-  assign addr = instr_mem_if.AddrSize'(pc);
+  assign addr = pc;
 
   logic reg_write;
   logic [OperandSize-1:0] read_data_1, read_data_2;
@@ -93,7 +93,6 @@ module single_cycle_datapath (
     endcase
   end
 
-  logic [OperandSize-1:0] alu_result;
   logic [3:0] alu_status;
   assign alu_status_zero = alu_status[2];
   alu alu (

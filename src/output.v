@@ -64,11 +64,7 @@ module single_cycle_datapath (
 			pc <= 'b0;
 		else
 			pc <= pc_next;
-	function automatic [instr_mem_if.AddrSize - 1:0] sv2v_cast_8B94B;
-		input reg [instr_mem_if.AddrSize - 1:0] inp;
-		sv2v_cast_8B94B = inp;
-	endfunction
-	assign addr = sv2v_cast_8B94B(pc);
+	assign addr = pc;
 	wire reg_write;
 	wire [31:0] read_data_1;
 	wire [31:0] read_data_2;
