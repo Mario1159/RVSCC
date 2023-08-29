@@ -7,15 +7,11 @@ project:
 # Source files must be in ./src and you must list each source file separately
   source_files:        
     - tt4_core.sv
-    - instr_memory.sv
-    - instr_memory_if.sv
     - register_file.sv
     - control_unit.sv
     - jump_control.sv
     - imm_extend.sv
     - alu.sv
-    - data_memory.sv
-    - data_memory_if.sv
     - rv32i_defs.sv
   top_module:  "tt_um_mario1159_rv32core"      # Put the name of your top module here, must start with "tt_um_". Make it unique by including your github username
 
