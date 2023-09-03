@@ -35,8 +35,8 @@ documentation:
 
 # A description of what the inputs do (e.g. red button, SPI CLK, SPI MOSI, etc).
   inputs:               
-    - clk
-    - rst
+    - none
+    - none
     - none
     - none
     - none

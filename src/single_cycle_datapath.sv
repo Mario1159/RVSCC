@@ -2,7 +2,7 @@
 
 import rv32i_defs::*;
 
-module single_cycle_datapath (
+module tt_um_single_cycle_datapath (
     input logic clk,
     input logic rst,
     input logic[31:0] instr,

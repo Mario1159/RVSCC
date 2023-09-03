@@ -16,4 +16,4 @@ ExternalProject_Add(firmware
   INSTALL_COMMAND ""
 )
 
-add_subdirectory(test)
+add_subdirectory(src/test)
