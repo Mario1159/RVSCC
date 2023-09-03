@@ -16,14 +16,15 @@ module tt_um_mario1159_rv32core (
 	input wire ena;
 	input wire clk;
 	input wire rst_n;
+	wire [23:0] temp;
 	assign uio_oe[7:0] = 'b11111111;
 	assign uio_out[7:0] = 'd0;
 	single_cycle_datapath dut(
 		.clk(clk),
 		.rst(!rst_n),
-		.instr(ui_in[7:0]),
+		.instr({24'd0,ui_in[7:0]}),
 		.addr(),
-		.alu_result(uo_out[7:0]),
+		.alu_result({temp, uo_out[7:0]}),
 		.read_data('d0),
 		.write_enable()
 	);
@@ -44,10 +45,10 @@ module single_cycle_datapath (
 	output wire [31:0] alu_result;
 	input wire [31:0] read_data;
 	output wire write_enable;
-	localparam signed [31:0] rv32i_defs_InstructionSize = 32;
+	localparam rv32i_defs_InstructionSize = 32;
 	reg [31:0] pc;
 	reg [31:0] pc_next;
-	localparam signed [31:0] rv32i_defs_OperandSize = 32;
+	localparam rv32i_defs_OperandSize = 32;
 	wire [31:0] imm_ext;
 	wire [31:0] pc_target;
 	assign pc_target = imm_ext + pc;
